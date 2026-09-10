@@ -1,0 +1,49 @@
+FUNCTION_BLOCK BayControlModule
+#info= QLD
+BOF
+
+
+(**)
+
+SOR  [0,1] (**) (**)  FB  [1,0] (*>=*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Run_Time_SP*) (**)  , (*i2:*)(*Run_Time_SP_Min*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Temp_SP*) (**)  , (*i2:*)(*Temp_SP_Min*) (**) ; (*o1:*)(**) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,5] (**) (**)  
+ BST  XIC  [1,0] (*Bay_Start_Cmd*) (**)
+   NXB  XIC  [1,1] (*Bay_Active_Flag*) (**)  XIO  [2,1] (*RTO_1.Q*) (**)  FB  [3,1] (*-*) (*5*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+ BND
+  OTE  [6,0] (*Bay_Active_Flag*) (**)
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,10] (**) (**)  XIC  [1,0] (*Bay_Active_Flag*) (**)  OTE  [2,0] (*Damper_Solenoid_Cmd*) (**)
+EOR [3,0]
+
+
+(**)
+
+SOR  [0,12] (**) (**)  XIC  [1,0] (*Bay_Active_Flag*) (**)  OTE  [2,0] (*Basket_VFD_Run*) (**)
+EOR [3,0]
+
+
+(**)
+
+SOR  [0,14] (**) (**)  XIC  [1,0] (*Bay_Active_Flag*) (**)  FB  [2,0] (*RTO*) (*RTO_1*) ( (*IN:*)(**) (**)  , (*RST:*)(**) (**)  , (*PT:*)(*Run_Time_SP*) (**) ; (*Q:*)(**) (**)  , (*ET:*)(*Elapsed_Time*) (**) )
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,18] (**) (**)  FB  [1,0] (*+*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+EOR [4,0]
+EOF
+#end_info
+#info= ID_MAX
+NextId=5
+#end_info
+END_FUNCTION_BLOCK

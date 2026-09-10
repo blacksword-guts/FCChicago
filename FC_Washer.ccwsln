@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# CCW Solution File, CCW Software 22.0
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{A6F45E2C-46AC-4E2B-9F75-4E058226B5AB}") = "PVc Project", "PVc Project\PVc Project.acfproj", "{99999999-9999-9999-9999-999999999999}"
+EndProject
+Project("{A6F45E2C-46AC-4E2B-9F75-4E058226B5AB}") = "Controller", "Controller\Controller.acfproj", "{6F5D96A4-0273-4E03-86BE-EB4E98E867FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Online|Any CPU = Online|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99999999-9999-9999-9999-999999999999}.Online|Any CPU.ActiveCfg = Online|Any CPU
+		{6F5D96A4-0273-4E03-86BE-EB4E98E867FE}.Online|Any CPU.ActiveCfg = Online|Any CPU
+		{6F5D96A4-0273-4E03-86BE-EB4E98E867FE}.Online|Any CPU.Build.0 = Online|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

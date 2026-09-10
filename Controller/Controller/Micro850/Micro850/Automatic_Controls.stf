@@ -1,0 +1,35 @@
+PROGRAM Automatic_Controls
+#info= QLD
+BOF
+
+
+(*Controls fan speed based on how many bays are active;
+*)
+
+SOR  [0,1] (**) (**)  FB  [1,0] (*SCALER*) (*SCALER_4*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*VAR_Active_Bay_Count*) (**)  , (*InputMin:*)(*0.0*) (**)  , (*InputMax:*)(*3.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) )  FB  [4,0] (*SCALER*) (*SCALER_1*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*VAR_Active_Bay_Count*) (**)  , (*InputMin:*)(*0.0*) (**)  , (*InputMax:*)(*3.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*60.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*Fan_Speed_Hz*) (**) )  FB  [7,0] (*1 gain*) (*9*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*IO_X1_AI_04*) (**) )  FB  [10,0] (*1 gain*) (*10*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*IO_X1_AI_05*) (**) )
+EOR [13,0]
+
+
+(*Controls trim logic based on the pressure of the supply and exhaust plenum
+*)
+
+SOR  [0,8] (**) (**)  FB  [1,0] (*-*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*AI_Plenum_Static_Pressure_REAL*) (**)  , (*i2:*)(*Supply_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Supply_Pressure_Error*) (**) )  FB  [4,0] (***) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Supply_Pressure_Error*) (**)  , (*i2:*)(*CFG_Pressure_Trim_Gain*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Supply_Trim_Hz*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,12] (**) (**)  FB  [1,0] (*>*) (*7*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Supply_Trim_Hz*) (**)  , (*i2:*)(*5.0*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*5*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*5.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Supply_Trim_Hz*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,16] (**) (**)  FB  [1,0] (*<*) (*6*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Supply_Trim_Hz*) (**)  , (*i2:*)(*-5.0*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*5*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*-5.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Supply_Trim_Hz*) (**) )
+EOR [7,0]
+EOF
+#end_info
+#info= ID_MAX
+NextId=7
+#end_info
+END_PROGRAM

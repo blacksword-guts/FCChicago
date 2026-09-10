@@ -1,0 +1,13 @@
+PROGRAM Safety_Interlocks
+#info= QLD
+BOF
+
+
+(*If any E-Stop is tripped, turn off green leds and turn on all red leds
+*)
+
+SOR  [0,1] (**) (**)  XIO  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)
+EOR [2,0]
+EOF
+#end_info
+END_PROGRAM
