@@ -3,11 +3,40 @@ PROGRAM Safety_Interlocks
 BOF
 
 
-(*If any E-Stop is tripped, turn off green leds and turn on all red leds
-*)
+(*If any E-Stop is tripped, turn off green leds and turn on all red leds*)
 
 SOR  [0,1] (**) (**)  XIO  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)
 EOR [2,0]
+
+
+(**)
+
+SOR  [0,3] (**) (**)  XIC  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)
+EOR [2,0]
+
+
+(**)
+
+SOR  [0,5] (**) (**)  FB  [1,0] (*TON*) (*TON_1*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*T#10s*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )
+EOR [4,0]
+
+
+(**)
+
+SOR  [0,8] (**) (**)
+EOR [1,0]
+
+
+(**)
+
+SOR  [0,9] (**) (**)
+EOR [1,0]
+
+
+(**)
+
+SOR  [0,10] (**) (**)
+EOR [1,0]
 EOF
 #end_info
 END_PROGRAM

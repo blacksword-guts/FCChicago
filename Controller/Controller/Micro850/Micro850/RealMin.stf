@@ -1,0 +1,27 @@
+FUNCTION_BLOCK RealMin
+#info= QLD
+BOF
+
+
+(**)
+
+SOR  [0,1] (**) (**)  FB  [1,0] (*ANY_TO_DINT*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Real_Var1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Dint_Var1*) (**) )  FB  [4,0] (*ANY_TO_DINT*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Real_Var2*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Dint_Var2*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,4] (**) (**)  FB  [1,0] (*MIN*) (*3*) ( (*EN:EN*)(**) (**)  , (*IN1:IN1*)(*Dint_Var1*) (**)  , (*IN2:IN2*)(*Dint_Var2*) (**) ; (*ENO:ENO*)(**) (**)  , (*MIN:Q*)(*Dint_Min_Value*) (**) )
+EOR [4,0]
+
+
+(**)
+
+SOR  [0,8] (**) (**)  FB  [1,0] (*ANY_TO_REAL*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Dint_Min_Value*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Real_Min_Value*) (**) )
+EOR [4,0]
+EOF
+#end_info
+#info= ID_MAX
+NextId=4
+#end_info
+END_FUNCTION_BLOCK

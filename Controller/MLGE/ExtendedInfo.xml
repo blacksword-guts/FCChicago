@@ -3,6 +3,12 @@
   <AcfElementGuid Guid="33559c29-6187-44d2-a3f9-0fc302e30da3">
     <File>BayControlModule.AcfMlge</File>
   </AcfElementGuid>
+  <AcfElementGuid Guid="3e04e67e-c32c-4986-82d1-e1a687d1ba9b">
+    <File>RealMin.AcfMlge</File>
+  </AcfElementGuid>
+  <AcfElementGuid Guid="5f15c5b9-c89a-465a-b59e-c672855f3098">
+    <File>RealMax.AcfMlge</File>
+  </AcfElementGuid>
   <AcfElementGuid Guid="8ede3599-373c-49b5-a855-06f71a1b1165">
     <File>Automatic_Controls.AcfMlge</File>
   </AcfElementGuid>
