@@ -58,6 +58,9 @@ Controller.Micro850.Micro850.Burner_Enable_Output
 Controller.Micro850.Micro850.End_Damper_Position
 Controller.Micro850.Micro850.CFG_Min_Fan_Speed
 Controller.Micro850.Micro850.AI_Ambient_Temp
-Controller.Micro850.Micro850.Ambient_Temp_Max
-Controller.Micro850.Micro850.Plenum_Temp_Max
-Controller.Micro850.Micro850.Safety_Interlocks.TON_1
+Controller.Micro850.Micro850.CFG_Ambient_Temp_Max
+Controller.Micro850.Micro850.CFG_Plenum_Temp_Max
+Controller.Micro850.Micro850.CFG_Purge_Duration
+Controller.Micro850.Micro850.Safety_Interlocks.SupplyProofTimer
+Controller.Micro850.Micro850.Safety_Interlocks.ExhaustProofTimer
+Controller.Micro850.Micro850.Safety_Interlocks.PurgeTimer
