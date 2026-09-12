@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ProjectElements>
+  <AcfElementGuid Guid="2106bbd2-c2cc-4c07-8677-2c7bc9bfb64a">
+    <File>DynamicPressureTrim.AcfMlge</File>
+  </AcfElementGuid>
   <AcfElementGuid Guid="33559c29-6187-44d2-a3f9-0fc302e30da3">
     <File>BayControlModule.AcfMlge</File>
   </AcfElementGuid>

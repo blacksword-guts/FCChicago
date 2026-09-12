@@ -1,0 +1,43 @@
+FUNCTION_BLOCK DynamicPressureTrim
+#info= QLD
+BOF
+
+
+(**)
+
+SOR  [0,1] (**) (**)  FB  [1,0] (*SCALER*) (*SCALER_4*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*VAR_Active_Bay_Count*) (**)  , (*InputMin:*)(*0.0*) (**)  , (*InputMax:*)(*3.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*60.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_FanSpeed_Hz*) (**) )
+EOR [4,0]
+
+
+(*Controls trim logic based on the pressure of the supply and exhaust plenum
+Get difference between current pressure and desired pressure; multiply difference by some gain setpoint*)
+
+SOR  [0,8] (**) (**)  FB  [1,0] (*-*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Plenum_Pressure*) (**)  , (*i2:*)(*CFG_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Pressure_Error*) (**) )  FB  [4,0] (***) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Pressure_Error*) (**)  , (*i2:*)(*CFG_Pressure_Trim_Gain*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Trim_Hz*) (**) )
+EOR [7,0]
+
+
+(*Make sure the trim is within allowable bounds of +/-5*)
+
+SOR  [0,12] (**) (**)  FB  [1,0] (*RealMin*) (*RealMin_1*) ( (*EN:EN*)(**) (**)  , (*Real_Var1:*)(*VAR_Trim_Hz*) (**)  , (*Real_Var2:*)(*5.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Real_Min_Value:*)(*VAR_Trim_Hz*) (**) )  FB  [4,0] (*RealMax*) (*RealMax_1*) ( (*EN:EN*)(**) (**)  , (*Real_Var1:*)(*VAR_Trim_Hz*) (**)  , (*Real_Var2:*)(*-5.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Real_Max_Value:*)(*VAR_Trim_Hz*) (**) )
+EOR [7,0]
+
+
+(*Get desired hz thats communicated to VFG by adding the two*)
+
+SOR  [0,16] (**) (**)  FB  [1,0] (*+*) (*8*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_FanSpeed_Hz*) (**)  , (*i2:*)(*VAR_Trim_Hz*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Desired_Hz*) (**) )
+EOR [4,0]
+
+
+(*Makes sure that desired hz is within allowable limits 0.0/60.0*)
+
+SOR  [0,20] (**) (**)  FB  [1,0] (*RealMin*) (*RealMin_1*) ( (*EN:EN*)(**) (**)  , (*Real_Var1:*)(*VAR_Desired_Hz*) (**)  , (*Real_Var2:*)(*60.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Real_Min_Value:*)(*VAR_Desired_Hz*) (**) )  FB  [4,0] (*RealMax*) (*RealMax_1*) ( (*EN:EN*)(**) (**)  , (*Real_Var1:*)(*VAR_Desired_Hz*) (**)  , (*Real_Var2:*)(*0.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Real_Max_Value:*)(*VAR_Desired_Hz*) (**) )
+EOR [7,0]
+
+
+(*Communicates to the VFD what the hZ should be by converting hZ to the units it understands*)
+
+SOR  [0,24] (**) (**)  FB  [1,0] (*SCALER*) (*SCALER_2*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*VAR_Desired_Hz*) (**)  , (*InputMin:*)(*0.0*) (**)  , (*InputMax:*)(*60.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_FanSpeed_Cmd*) (**) )
+EOR [4,0]
+EOF
+#end_info
+END_FUNCTION_BLOCK
