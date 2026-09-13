@@ -74,3 +74,13 @@ Controller.Micro850.Micro850.CFG_Exhaust_Pressure_SP
 Controller.Micro850.Micro850.Automatic_Controls.ExhaustPressureTrim
 Controller.Micro850.Micro850.Automatic_Controls.SupplyPressureTrim
 Controller.Micro850.Micro850.AO_End_Damper_Position
+Controller.Micro850.Micro850.System_State
+Controller.Micro850.Micro850.VAR_HMI_Start_PB
+Controller.Micro850.Micro850.VAR_HMI_Burner_Ignite_Confirm
+Controller.Micro850.Micro850.CFG_IDLE_STATE
+Controller.Micro850.Micro850.CFG_PRE_PURGE_CYCLE_STATE
+Controller.Micro850.Micro850.CFG_BURNER_PERMISSIVE_STATE
+Controller.Micro850.Micro850.CFG_ACTIVE_STATE
+Controller.Micro850.Micro850.CFG_SYSTEM_COOLDOWN_STATE
+Controller.Micro850.Micro850.CFG_FAULT_STATE
+Controller.Micro850.Micro850.VAR_Basket_Present

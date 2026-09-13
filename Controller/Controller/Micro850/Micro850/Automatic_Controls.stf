@@ -3,19 +3,70 @@ PROGRAM Automatic_Controls
 BOF
 
 
-(*Controls fan speed based on how many bays are active;*)
+(**)
 
-SOR  [0,1] (**) (**)  FB  [1,0] (*SCALER*) (*SCALER_4*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*VAR_Active_Bay_Count*) (**)  , (*InputMin:*)(*0.0*) (**)  , (*InputMax:*)(*3.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) )  FB  [4,0] (*1 gain*) (*9*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Supply_Fan_Speed_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*10*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**) )
+SOR  [0,1] (**) (**)  
+ BST  XIC  [1,0] (*_IO_EM_DI_05*) (*DI_Bay1_Basket_Sensor*)
+   NXB  
+ BST  XIC  [1,1] (*_IO_EM_DI_06*) (*DI_Bay2_Basket_Sensor*)
+   NXB  XIC  [1,2] (*_IO_EM_DI_07*) (*DI_Bay3_Basket_Sensor*)
+ BND
+
+ BND
+  OTE  [2,0] (*VAR_Basket_Present*) (**)
+EOR [3,0]
+
+
+(*IDLE is the default system state. But if the system is in idle, the start pb is pushed and atleast one basket is present, then we move on to pre purge cycle
+*)
+
+SOR  [0,5] (**) (**)  FB  [1,0] (*=*) (*13*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*System_State*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Start_PB*) (**)  XIC  [5,0] (*VAR_Basket_Present*) (**)  XIC  [6,0] (*_IO_EM_DI_03*) (*DI_EndDamper_Open_Proof*)  FB  [7,0] (*1 gain*) (*14*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_PRE_PURGE_CYCLE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*System_State*) (**) )
 EOR [10,0]
 
 
 (**)
 
-SOR  [0,8] (**) (**)  FB  [1,0] (*DynamicPressureTrim*) (*SupplyPressureTrim*) ( (*EN:EN*)(**) (**)  , (*VAR_Plenum_Pressure:*)(*AI_Supply_Pressure_PV*) (**)  , (*VAR_FanSpeed_Cmd:*)(*AO_Supply_Fan_Speed_Cmd*) (**)  , (*CFG_Pressure_SP:*)(*CFG_Supply_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**) )  FB  [4,0] (*DynamicPressureTrim*) (*ExhaustPressureTrim*) ( (*EN:EN*)(**) (**)  , (*VAR_Plenum_Pressure:*)(*AI_Exhaust_Pressure_PV*) (**)  , (*VAR_FanSpeed_Cmd:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**)  , (*CFG_Pressure_SP:*)(*CFG_Exhaust_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**) )
+SOR  [0,9] (**) (**)
+EOR [1,0]
+
+
+(**)
+
+SOR  [0,10] (**) (**)
+EOR [1,0]
+
+
+(**)
+
+SOR  [0,11] (**) (**)
+EOR [1,0]
+
+
+(**)
+
+SOR  [0,12] (**) (**)
+EOR [1,0]
+
+
+(**)
+
+SOR  [0,13] (**) (**)
+EOR [1,0]
+
+
+(*Controls fan speed based on how many bays are active;*)
+
+SOR  [0,14] (**) (**)  FB  [1,0] (*SCALER*) (*SCALER_4*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*VAR_Active_Bay_Count*) (**)  , (*InputMin:*)(*0.0*) (**)  , (*InputMax:*)(*3.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) )  FB  [4,0] (*1 gain*) (*9*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Supply_Fan_Speed_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*10*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**) )
+EOR [10,0]
+
+
+(**)
+
+SOR  [0,21] (**) (**)  FB  [1,0] (*DynamicPressureTrim*) (*SupplyPressureTrim*) ( (*EN:EN*)(**) (**)  , (*VAR_Plenum_Pressure:*)(*AI_Supply_Pressure_PV*) (**)  , (*VAR_FanSpeed_Cmd:*)(*AO_Supply_Fan_Speed_Cmd*) (**)  , (*CFG_Pressure_SP:*)(*CFG_Supply_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**) )  FB  [4,0] (*DynamicPressureTrim*) (*ExhaustPressureTrim*) ( (*EN:EN*)(**) (**)  , (*VAR_Plenum_Pressure:*)(*AI_Exhaust_Pressure_PV*) (**)  , (*VAR_FanSpeed_Cmd:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**)  , (*CFG_Pressure_SP:*)(*CFG_Exhaust_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**) )
 EOR [7,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=12
+NextId=14
 #end_info
 END_PROGRAM

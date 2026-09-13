@@ -134,12 +134,18 @@ Controller.Micro850.Micro850.Automatic_Controls.VAR_Scaled_Hz_To_Eng_Units,
 Controller.Micro850.Micro850.Automatic_Controls.VAR_Supply_Pressure_Error,
 Controller.Micro850.Micro850.Automatic_Controls.VAR_Trim_Hz,
 Controller.Micro850.Micro850.Burner_Enable_Output,
+Controller.Micro850.Micro850.CFG_ACTIVE_STATE,30
 Controller.Micro850.Micro850.CFG_Ambient_Temp_Max,
+Controller.Micro850.Micro850.CFG_BURNER_PERMISSIVE_STATE,20
 Controller.Micro850.Micro850.CFG_Exhaust_Pressure_SP,
+Controller.Micro850.Micro850.CFG_FAULT_STATE,99
+Controller.Micro850.Micro850.CFG_IDLE_STATE,0
 Controller.Micro850.Micro850.CFG_Plenum_Temp_Max,
+Controller.Micro850.Micro850.CFG_PRE_PURGE_CYCLE_STATE,10
 Controller.Micro850.Micro850.CFG_Pressure_Trim_Gain,
 Controller.Micro850.Micro850.CFG_Purge_Duration,
 Controller.Micro850.Micro850.CFG_Supply_Pressure_SP,
+Controller.Micro850.Micro850.CFG_SYSTEM_COOLDOWN_STATE,40
 Controller.Micro850.Micro850.IO_Scaling.AI_Exhaust_Plenum_Temp_PV,
 Controller.Micro850.Micro850.IO_Scaling.AI_Exhaust_Plenum_Temp_REAL,
 Controller.Micro850.Micro850.IO_Scaling.AI_Exhaust_Pressure_REAL,
@@ -590,4 +596,8 @@ Controller.Micro850.Micro850.Safety_Interlocks.SupplyProofTimer.Pdate,
 Controller.Micro850.Micro850.Safety_Interlocks.SupplyProofTimer.PT,
 Controller.Micro850.Micro850.Safety_Interlocks.SupplyProofTimer.Q,
 Controller.Micro850.Micro850.Safety_Interlocks.SupplyProofTimer.Redge,
+Controller.Micro850.Micro850.System_State,
 Controller.Micro850.Micro850.VAR_Active_Bay_Count,
+Controller.Micro850.Micro850.VAR_Basket_Present,
+Controller.Micro850.Micro850.VAR_HMI_Burner_Ignite_Confirm,
+Controller.Micro850.Micro850.VAR_HMI_Start_PB,
