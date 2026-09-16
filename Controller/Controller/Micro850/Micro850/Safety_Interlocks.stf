@@ -5,7 +5,7 @@ BOF
 
 (**)
 
-SOR  [0,1] (**) (**)  XIC  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)
+SOR  [0,1] (**) (**)  XIO  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)
 EOR [2,0]
 
 
@@ -35,7 +35,7 @@ EOR [7,0]
 
 (**)
 
-SOR  [0,16] (**) (**)  XIC  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)  XIC  [2,0] (*SupplyProofTimer.Q*) (*Q*)  XIC  [3,0] (*ExhaustProofTimer.Q*) (*Q*)  XIC  [4,0] (*PurgeTimer.Q*) (*Q*)  OTE  [5,0] (*Burner_Enable_Output*) (**)
+SOR  [0,16] (**) (**)  XIO  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)  XIC  [2,0] (*SupplyProofTimer.Q*) (*Q*)  XIC  [3,0] (*ExhaustProofTimer.Q*) (*Q*)  XIC  [4,0] (*PurgeTimer.Q*) (*Q*)  OTE  [5,0] (*Burner_Enable_Permissive*) (**)
 EOR [6,0]
 
 
@@ -43,9 +43,39 @@ EOR [6,0]
 
 SOR  [0,18] (**) (**)
 EOR [1,0]
+
+
+(**)
+
+SOR  [0,19] (**) (**)  FB  [1,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_00*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )  OTE  [4,0] (*ALARM_L2_Active*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,23] (**) (**)  FB  [1,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_01*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )  OTE  [4,0] (*ALARM_L2_Active*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,27] (**) (**)  FB  [1,0] (*<=*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_00*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*<=*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_01*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )  XIC  [7,0] (*VAR_HMI_Reset_PB*) (**)  OTR  [8,0] (*ALARM_L2_Active*) (**)
+EOR [9,0]
+
+
+(**)
+
+SOR  [0,31] (**) (**)
+EOR [1,0]
+
+
+(**)
+
+SOR  [0,32] (**) (**)
+EOR [1,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=2
+NextId=4
 #end_info
 END_PROGRAM

@@ -17,56 +17,145 @@ SOR  [0,1] (**) (**)
 EOR [3,0]
 
 
-(*IDLE is the default system state. But if the system is in idle, the start pb is pushed and atleast one basket is present, then we move on to pre purge cycle
-*)
+(*IDLE is the default system state. But if the system is in idle, the start pb is pushed and atleast one basket is present, all the bay dampers are closed and the supply and exhaust fan speeds match the config then we move on to pre purge cycle*)
 
-SOR  [0,5] (**) (**)  FB  [1,0] (*=*) (*13*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*System_State*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Start_PB*) (**)  XIC  [5,0] (*VAR_Basket_Present*) (**)  XIC  [6,0] (*_IO_EM_DI_03*) (*DI_EndDamper_Open_Proof*)  FB  [7,0] (*1 gain*) (*14*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_PRE_PURGE_CYCLE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*System_State*) (**) )
-EOR [10,0]
-
-
-(**)
-
-SOR  [0,9] (**) (**)
-EOR [1,0]
+SOR  [0,5] (**) (**)  FB  [1,0] (*=*) (*13*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Start_PB*) (**)  XIC  [5,0] (*VAR_Basket_Present*) (**)  XIC  [6,0] (*_IO_EM_DI_03*) (*DI_EndDamper_Open_Proof*)  XIO  [7,0] (*_IO_EM_DO_01*) (*DO_Bay1_Damper_Solenoid*)  XIO  [8,0] (*_IO_EM_DO_02*) (*DO_Bay2_Damper_Solenoid*)  XIO  [9,0] (*_IO_EM_DO_03*) (*DO_Bay3_Damper_Solenoid*)  FB  [10,0] (*=*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*AO_Supply_Fan_Speed_Cmd*) (**)  , (*i2:*)(*CFG_Purge_Fan_Speed*) (**) ; (*o1:*)(**) (**) )  FB  [13,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**)  , (*i2:*)(*CFG_Purge_Fan_Speed*) (**) ; (*o1:*)(**) (**) )  FB  [16,0] (*TON*) (*PrePurge*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*CFG_Purge_Duration*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )  FB  [19,0] (*1 gain*) (*14*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_PRE_PURGE_CYCLE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
+EOR [22,0]
 
 
 (**)
 
-SOR  [0,10] (**) (**)
-EOR [1,0]
+SOR  [0,9] (**) (**)  FB  [1,0] (*=*) (*13*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_PRE_PURGE_CYCLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*PrePurge.Q*) (*Q*)  FB  [5,0] (*<*) (*17*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_00*) (**)  , (*i2:*)(*CFG_Plenum_Temp_Max*) (**) ; (*o1:*)(**) (**) )  FB  [8,0] (*<*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_01*) (**)  , (*i2:*)(*CFG_Plenum_Temp_Max*) (**) ; (*o1:*)(**) (**) )  FB  [11,0] (*<*) (*19*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*AI_Ambient_Temp*) (**)  , (*i2:*)(*CFG_Ambient_Temp_Max*) (**) ; (*o1:*)(**) (**) )  FB  [14,0] (*1 gain*) (*20*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_BURNER_PERMISSIVE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
+EOR [17,0]
 
 
 (**)
 
-SOR  [0,11] (**) (**)
-EOR [1,0]
+SOR  [0,13] (**) (**)  FB  [1,0] (*=*) (*21*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_BURNER_PERMISSIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Burner_Ignite_Confirm*) (**)  XIO  [5,0] (*ALARM_L2_Active*) (**)  FB  [6,0] (*1 gain*) (*22*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_ACTIVE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
+EOR [9,0]
 
 
 (**)
 
-SOR  [0,12] (**) (**)
-EOR [1,0]
+SOR  [0,17] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIO  [4,0] (*ALARM_L2_Active*) (**)  FB  [5,0] (*BayControlModule*) (*Bay1_1*) ( (*EN:EN*)(**) (**)  , (*VAR_Temp_SP:*)(*CFG_Bay1_Temp_SP*) (**)  , (*VAR_Bay_Start_Cmd:*)(*VAR_Bay1_Start_PB*) (**)  , (*VAR_Run_Time_SP:*)(*CFG_Bay1_Run_Time*) (**)  , (*VAR_Damper_Solenoid_Cmd:*)(*_IO_EM_DO_01*) (**)  , (*VAR_Basket_VFD_Run:*)(*_IO_EM_DO_04*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_Elapsed_Time:*)(**) (**)  , (*VAR_Bay_Active_Flag:*)(**) (**) )
+EOR [8,0]
 
 
 (**)
 
-SOR  [0,13] (**) (**)
-EOR [1,0]
+SOR  [0,24] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIO  [4,0] (*ALARM_L2_Active*) (**)  FB  [5,0] (*BayControlModule*) (*Bay2_1*) ( (*EN:EN*)(**) (**)  , (*VAR_Temp_SP:*)(*CFG_Bay2_Temp_SP*) (**)  , (*VAR_Bay_Start_Cmd:*)(*VAR_Bay2_Start_PB*) (**)  , (*VAR_Run_Time_SP:*)(*CFG_Bay2_Run_Time*) (**)  , (*VAR_Damper_Solenoid_Cmd:*)(*_IO_EM_DO_02*) (**)  , (*VAR_Basket_VFD_Run:*)(*_IO_EM_DO_05*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_Elapsed_Time:*)(**) (**)  , (*VAR_Bay_Active_Flag:*)(**) (**) )
+EOR [8,0]
+
+
+(**)
+
+SOR  [0,31] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIO  [4,0] (*ALARM_L2_Active*) (**)  FB  [5,0] (*BayControlModule*) (*Bay3_1*) ( (*EN:EN*)(**) (**)  , (*VAR_Temp_SP:*)(*CFG_Bay3_Temp_SP*) (**)  , (*VAR_Bay_Start_Cmd:*)(*VAR_Bay3_Start_PB*) (**)  , (*VAR_Run_Time_SP:*)(*CFG_Bay3_Run_Time*) (**)  , (*VAR_Damper_Solenoid_Cmd:*)(*_IO_EM_DO_03*) (**)  , (*VAR_Basket_VFD_Run:*)(*_IO_EM_DO_06*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_Elapsed_Time:*)(**) (**)  , (*VAR_Bay_Active_Flag:*)(**) (**) )
+EOR [8,0]
+
+
+(**)
+
+SOR  [0,38] (**) (**)  FB  [1,0] (*1 gain*) (*25*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+EOR [4,0]
+
+
+(**)
+
+SOR  [0,41] (**) (**)  XIC  [1,0] (*Bay1_1.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,45] (**) (**)  XIC  [1,0] (*Bay2_1.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,49] (**) (**)  XIC  [1,0] (*Bay3_1.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+EOR [5,0]
 
 
 (*Controls fan speed based on how many bays are active;*)
 
-SOR  [0,14] (**) (**)  FB  [1,0] (*SCALER*) (*SCALER_4*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*VAR_Active_Bay_Count*) (**)  , (*InputMin:*)(*0.0*) (**)  , (*InputMax:*)(*3.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) )  FB  [4,0] (*1 gain*) (*9*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Supply_Fan_Speed_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*10*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**) )
+SOR  [0,53] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*SCALER*) (*SCALER_4*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*VAR_Active_Bay_Count*) (**)  , (*InputMin:*)(*0.0*) (**)  , (*InputMax:*)(*3.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) )  FB  [7,0] (*1 gain*) (*9*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Supply_Fan_Speed_Cmd*) (**) )  FB  [10,0] (*1 gain*) (*10*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Scaled_Hz_To_Eng_Units*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**) )
+EOR [13,0]
+
+
+(**)
+
+SOR  [0,60] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*DynamicPressureTrim*) (*SupplyPressureTrim*) ( (*EN:EN*)(**) (**)  , (*VAR_Plenum_Pressure:*)(*AI_Supply_Pressure_PV*) (**)  , (*VAR_FanSpeed_Cmd:*)(*AO_Supply_Fan_Speed_Cmd*) (**)  , (*CFG_Pressure_SP:*)(*CFG_Supply_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**) )  FB  [7,0] (*DynamicPressureTrim*) (*ExhaustPressureTrim*) ( (*EN:EN*)(**) (**)  , (*VAR_Plenum_Pressure:*)(*AI_Exhaust_Pressure_PV*) (**)  , (*VAR_FanSpeed_Cmd:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**)  , (*CFG_Pressure_SP:*)(*CFG_Exhaust_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**) )
 EOR [10,0]
 
 
 (**)
 
-SOR  [0,21] (**) (**)  FB  [1,0] (*DynamicPressureTrim*) (*SupplyPressureTrim*) ( (*EN:EN*)(**) (**)  , (*VAR_Plenum_Pressure:*)(*AI_Supply_Pressure_PV*) (**)  , (*VAR_FanSpeed_Cmd:*)(*AO_Supply_Fan_Speed_Cmd*) (**)  , (*CFG_Pressure_SP:*)(*CFG_Supply_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**) )  FB  [4,0] (*DynamicPressureTrim*) (*ExhaustPressureTrim*) ( (*EN:EN*)(**) (**)  , (*VAR_Plenum_Pressure:*)(*AI_Exhaust_Pressure_PV*) (**)  , (*VAR_FanSpeed_Cmd:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**)  , (*CFG_Pressure_SP:*)(*CFG_Exhaust_Pressure_SP*) (**) ; (*ENO:ENO*)(**) (**) )
+SOR  [0,65] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  
+ BST  XIC  [4,0] (*Bay1_1.VAR_Bay_Active_Flag*) (**)
+   NXB  
+ BST  XIC  [4,1] (*Bay2_1.VAR_Bay_Active_Flag*) (**)
+   NXB  XIC  [4,2] (*Bay3_1.VAR_Bay_Active_Flag*) (**)
+ BND
+
+ BND
+  OTE  [5,0] (*Cycle_Has_Started*) (**)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,69] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIO  [4,0] (*Bay1_1.VAR_Bay_Active_Flag*) (**)  XIO  [5,0] (*Bay2_1.VAR_Bay_Active_Flag*) (**)  XIO  [6,0] (*Bay3_1.VAR_Bay_Active_Flag*) (**)  OTE  [7,0] (*All_Bays_Inactive*) (**)
+EOR [8,0]
+
+
+(**)
+
+SOR  [0,73] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Cycle_Has_Started*) (**)  
+ BST  XIC  [5,0] (*All_Bays_Inactive*) (**)
+   NXB  XIC  [5,1] (*VAR_HMI_Stop_PB*) (**)
+ BND
+  FB  [6,0] (*1 gain*) (*24*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
+EOR [9,0]
+
+
+(**)
+
+SOR  [0,77] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*Burner_Enable*) (**)
+EOR [5,0]
+
+
+(*Bay Damper and VFD Run (STOPS) are controlled by the by the bay instances themselves.*)
+
+SOR  [0,81] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*27*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_End_Damper_Position*) (**) )
 EOR [7,0]
+
+
+(**)
+
+SOR  [0,85] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_01*) (*DO_Bay1_Damper_Solenoid*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,89] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_02*) (*DO_Bay2_Damper_Solenoid*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,93] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_03*) (*DO_Bay3_Damper_Solenoid*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,97] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*28*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_Purge_Fan_Speed*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Supply_Fan_Speed_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*29*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_Purge_Fan_Speed*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**) )  FB  [10,0] (*TON*) (*CooldownTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*CFG_Cooldown_Time_SP*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )  XIC  [13,0] (*CooldownTimer.Q*) (*Q*)  FB  [14,0] (*1 gain*) (*30*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_IDLE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
+EOR [17,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=14
+NextId=30
 #end_info
 END_PROGRAM

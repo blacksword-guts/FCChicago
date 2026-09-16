@@ -3,20 +3,27 @@ FUNCTION_BLOCK BayControlModule
 BOF
 
 
-(**)
+(*If the SPs are greater than the CFG_Minimums, proceed.*)
 
-SOR  [0,1] (**) (**)  FB  [1,0] (*>=*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Run_Time_SP*) (**)  , (*i2:*)(*VAR_Run_Time_SP_Min*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Temp_SP*) (**)  , (*i2:*)(*CFG_Temp_SP_Min*) (**) ; (*o1:*)(**) (**) )
-EOR [7,0]
+SOR  [0,1] (**) (**)  FB  [1,0] (*>=*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Run_Time_SP*) (**)  , (*i2:*)(*VAR_Run_Time_SP_Min*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Temp_SP*) (**)  , (*i2:*)(*CFG_Temp_SP_Min*) (**) ; (*o1:*)(**) (**) )  OTE  [7,0] (*VAR_Valid_SP*) (**)
+EOR [8,0]
 
 
-(**)
+(*Rungs 2-4 control the start cmd, once pressed it activates the damper and the vfd. As well as energizing the bay_active_flag.
+*)
 
 SOR  [0,5] (**) (**)  
- BST  XIC  [1,0] (*VAR_Bay_Start_Cmd*) (**)
-   NXB  XIC  [1,1] (*VAR_Bay_Active_Flag*) (**)  XIO  [2,1] (*RTO_1.Q*) (**)  FB  [3,1] (*-*) (*5*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+ BST  XIC  [1,0] (*VAR_Bay_Start_Cmd*) (**)  XIC  [2,0] (*VAR_Valid_SP*) (**)
+   NXB  XIC  [1,1] (*VAR_Bay_Active_Flag*) (**)  XIO  [2,1] (*RTO_1.Q*) (**)
  BND
-  OTE  [6,0] (*VAR_Bay_Active_Flag*) (**)
-EOR [7,0]
+  OTE  [3,0] (*VAR_Bay_Active_Flag*) (**)
+EOR [4,0]
+
+
+(**)
+
+SOR  [0,8] (**) (**)  XIC  [1,0] (*VAR_Bay_Start_Cmd*) (**)  XIO  [2,0] (*VAR_Bay_Active_Flag*) (**)  OTE  [3,0] (*RTO_1.RST*) (**)
+EOR [4,0]
 
 
 (**)
@@ -31,19 +38,33 @@ SOR  [0,12] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  OTE  [2,0] (*VAR
 EOR [3,0]
 
 
-(**)
+(*if the flag is active, start timer.*)
 
 SOR  [0,14] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*RTO*) (*RTO_1*) ( (*IN:*)(**) (**)  , (*RST:*)(**) (**)  , (*PT:*)(*VAR_Run_Time_SP*) (**) ; (*Q:*)(**) (**)  , (*ET:*)(*VAR_Elapsed_Time*) (**) )
 EOR [5,0]
 
 
-(**)
+(*if the flag is active and the tier is done de-energize the bay_active_flag*)
 
-SOR  [0,18] (**) (**)  FB  [1,0] (*+*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+SOR  [0,18] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  XIC  [2,0] (*RTO_1.Q*) (**)  OTR  [3,0] (*VAR_Bay_Active_Flag*) (**)
 EOR [4,0]
+
+
+(*Once timer is completed, close damper.
+*)
+
+SOR  [0,20] (**) (**)  XIC  [1,0] (*RTO_1.Q*) (**)  OTR  [2,0] (*VAR_Damper_Solenoid_Cmd*) (**)
+EOR [3,0]
+
+
+(*Once timer is cmpleted, turn off VFD.
+*)
+
+SOR  [0,22] (**) (**)  XIC  [1,0] (*RTO_1.Q*) (**)  OTR  [2,0] (*VAR_Basket_VFD_Run*) (**)
+EOR [3,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=5
+NextId=6
 #end_info
 END_FUNCTION_BLOCK
