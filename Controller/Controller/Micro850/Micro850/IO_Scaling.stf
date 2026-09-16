@@ -5,17 +5,15 @@ BOF
 
 (*AI_Supply_Plenum_Temp (32F-200F)
 AI_Plenum_Static_Pressure(0.0-5.0 in/WC)
-AI_Fan_Speed_Control(0.0-60.00hz)
+AI_Fan_Speed_Control(0.0-60.00hz)*)
 
-*)
-
-SOR  [0,1] (**) (**)  FB  [1,0] (*ANY_TO_REAL*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_00*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AI_Supply_Plenum_Temp_REAL*) (**) )  FB  [4,0] (*SCALER*) (*SupplyPlenumTempScaler*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*AI_Supply_Plenum_Temp_REAL*) (**)  , (*InputMin:*)(*13107.0*) (**)  , (*InputMax:*)(*65535.0*) (**)  , (*OutputMin:*)(*32.0*) (**)  , (*OutputMax:*)(*200.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*AI_Supply_Plenum_Temp_PV*) (**) )
+SOR  [0,1] (**) (**)  FB  [1,0] (*ANY_TO_REAL*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_00*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AI_Supply_Plenum_Temp_REAL*) (**) )  FB  [4,0] (*SCALER*) (*SupplyPlenumTempScaler*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*AI_Supply_Plenum_Temp_REAL*) (**)  , (*InputMin:*)(*13107.0*) (**)  , (*InputMax:*)(*65535.0*) (**)  , (*OutputMin:*)(*32.0*) (**)  , (*OutputMax:*)(*200.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_Supply_Plenum_Temp*) (**) )
 EOR [7,0]
 
 
 (**)
 
-SOR  [0,8] (**) (**)  FB  [1,0] (*ANY_TO_REAL*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_01*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AI_Exhaust_Plenum_Temp_REAL*) (**) )  FB  [4,0] (*SCALER*) (*ExhaustFanTempScaler*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*AI_Exhaust_Plenum_Temp_REAL*) (**)  , (*InputMin:*)(*13107.0*) (**)  , (*InputMax:*)(*65535.0*) (**)  , (*OutputMin:*)(*32.0*) (**)  , (*OutputMax:*)(*200.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*AI_Exhaust_Plenum_Temp_PV*) (**) )
+SOR  [0,8] (**) (**)  FB  [1,0] (*ANY_TO_REAL*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_01*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AI_Exhaust_Plenum_Temp_REAL*) (**) )  FB  [4,0] (*SCALER*) (*ExhaustFanTempScaler*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*AI_Exhaust_Plenum_Temp_REAL*) (**)  , (*InputMin:*)(*13107.0*) (**)  , (*InputMax:*)(*65535.0*) (**)  , (*OutputMin:*)(*32.0*) (**)  , (*OutputMax:*)(*200.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_Exhaust_Plenum_Temp*) (**) )
 EOR [7,0]
 
 

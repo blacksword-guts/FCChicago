@@ -1,0 +1,57 @@
+FUNCTION_BLOCK MasterEndDamperControl
+#info= QLD
+BOF
+
+
+(**)
+
+SOR  [0,1] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_End_Damper_Position*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,5] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_PRE_PURGE_CYCLE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_End_Damper_Position*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,9] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_BURNER_PERMISSIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*0.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_End_Damper_Position*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,13] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*VAR_Exhaust_Plenum_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [7,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Highest_Temp*) (**) )
+EOR [10,0]
+
+
+(**)
+
+SOR  [0,17] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*VAR_Supply_Plenum_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [7,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Highest_Temp*) (**) )
+EOR [10,0]
+
+
+(**)
+
+SOR  [0,21] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*SCALER*) (*TempToEndDamperScaler*) ( (*EN:EN*)(**) (**)  , (*Input:*)(*Highest_Temp*) (**)  , (*InputMin:*)(*80.0*) (**)  , (*InputMax:*)(*95.0*) (**)  , (*OutputMin:*)(*0.0*) (**)  , (*OutputMax:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Output:*)(*VAR_End_Damper_Position*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,28] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_End_Damper_Position*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,32] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_FAULT_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_End_Damper_Position*) (**) )
+EOR [7,0]
+EOF
+#end_info
+#info= ID_MAX
+NextId=2
+#end_info
+END_FUNCTION_BLOCK

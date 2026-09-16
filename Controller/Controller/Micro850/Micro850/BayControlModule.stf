@@ -5,12 +5,11 @@ BOF
 
 (*If the SPs are greater than the CFG_Minimums, proceed.*)
 
-SOR  [0,1] (**) (**)  FB  [1,0] (*>=*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Run_Time_SP*) (**)  , (*i2:*)(*VAR_Run_Time_SP_Min*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Temp_SP*) (**)  , (*i2:*)(*CFG_Temp_SP_Min*) (**) ; (*o1:*)(**) (**) )  OTE  [7,0] (*VAR_Valid_SP*) (**)
+SOR  [0,1] (**) (**)  FB  [1,0] (*>=*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Run_Time_SP*) (**)  , (*i2:*)(*VAR_Run_Time_SP_Min*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Temp_Actual*) (**)  , (*i2:*)(*CFG_Temp_SP_Min*) (**) ; (*o1:*)(**) (**) )  OTE  [7,0] (*VAR_Valid_SP*) (**)
 EOR [8,0]
 
 
-(*Rungs 2-4 control the start cmd, once pressed it activates the damper and the vfd. As well as energizing the bay_active_flag.
-*)
+(*Rungs 2-4 control the start cmd, once pressed it activates the damper and the vfd. As well as energizing the bay_active_flag.*)
 
 SOR  [0,5] (**) (**)  
  BST  XIC  [1,0] (*VAR_Bay_Start_Cmd*) (**)  XIC  [2,0] (*VAR_Valid_SP*) (**)
@@ -50,15 +49,13 @@ SOR  [0,18] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  XIC  [2,0] (*RTO
 EOR [4,0]
 
 
-(*Once timer is completed, close damper.
-*)
+(*Once timer is completed, close damper.*)
 
 SOR  [0,20] (**) (**)  XIC  [1,0] (*RTO_1.Q*) (**)  OTR  [2,0] (*VAR_Damper_Solenoid_Cmd*) (**)
 EOR [3,0]
 
 
-(*Once timer is cmpleted, turn off VFD.
-*)
+(*Once timer is cmpleted, turn off VFD.*)
 
 SOR  [0,22] (**) (**)  XIC  [1,0] (*RTO_1.Q*) (**)  OTR  [2,0] (*VAR_Basket_VFD_Run*) (**)
 EOR [3,0]

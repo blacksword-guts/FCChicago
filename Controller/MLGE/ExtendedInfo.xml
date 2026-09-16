@@ -3,11 +3,17 @@
   <AcfElementGuid Guid="2106bbd2-c2cc-4c07-8677-2c7bc9bfb64a">
     <File>DynamicPressureTrim.AcfMlge</File>
   </AcfElementGuid>
+  <AcfElementGuid Guid="2b9e75a6-d73b-4df7-ae04-4697b1f72dcf">
+    <File>MasterFanControl.AcfMlge</File>
+  </AcfElementGuid>
   <AcfElementGuid Guid="33559c29-6187-44d2-a3f9-0fc302e30da3">
     <File>BayControlModule.AcfMlge</File>
   </AcfElementGuid>
   <AcfElementGuid Guid="3e04e67e-c32c-4986-82d1-e1a687d1ba9b">
     <File>RealMin.AcfMlge</File>
+  </AcfElementGuid>
+  <AcfElementGuid Guid="4e93cc4b-51a1-477f-8b09-cda4ae51ab74">
+    <File>MasterEndDamperControl.AcfMlge</File>
   </AcfElementGuid>
   <AcfElementGuid Guid="5f15c5b9-c89a-465a-b59e-c672855f3098">
     <File>RealMax.AcfMlge</File>

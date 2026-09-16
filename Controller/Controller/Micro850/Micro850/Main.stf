@@ -3,13 +3,158 @@ PROGRAM Main
 BOF
 
 
+(*MAIN() controls the highest level of operation and is the file that actually writes to the OUTPUTS()
+MAIN() as a result, control AUTO and OFF modes.*)
+
+SOR  [0,1] (**) (**)  XIC  [1,0] (*VAR_HMI_Mode_Hand*) (**)  FB  [2,0] (*1 gain*) (*13*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*G_SYSTEM_MODE*) (**) )
+EOR [5,0]
+
+
 (**)
 
-SOR  [0,1] (**) (**)  FB  [1,0] (*AND*) (*12*) ( (*i1:*)(**) (**)  , (*i2:*)(*Burner_Enable_Permissive*) (**) ; (*o1:*)(**) (**) )  OTE  [4,0] (*Burner_Enable*) (**)
+SOR  [0,4] (**) (**)  XIC  [1,0] (*VAR_HMI_Mode_Auto*) (**)  FB  [2,0] (*1 gain*) (*14*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*G_SYSTEM_MODE*) (**) )
 EOR [5,0]
+
+
+(**)
+
+SOR  [0,7] (**) (**)  XIO  [1,0] (*VAR_HMI_Mode_Hand*) (**)  XIO  [2,0] (*VAR_HMI_Mode_Auto*) (**)  FB  [3,0] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*G_SYSTEM_MODE*) (**) )
+EOR [6,0]
+
+
+(*If AUTO_BURNER_CMD and conditions are met for BURNER, turn on BURNER.*)
+
+SOR  [0,10] (**) (**)  FB  [1,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*G_SYSTEM_MODE*) (**)  , (*i2:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_Auto_Burner_Cmd*) (**)  XIC  [5,0] (*Burner_Enable_Permissive*) (**)  OTE  [6,0] (*VAR_Burner_Enable_Output*) (**)
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,14] (**) (**)  FB  [1,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*G_SYSTEM_MODE*) (**)  , (*i2:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Auto_Bay1_Damper_Solenoid*) (**)  OTE  [5,0] (*_IO_EM_DO_01*) (*DO_Bay1_Damper_Solenoid*)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,18] (**) (**)  FB  [1,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*G_SYSTEM_MODE*) (**)  , (*i2:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Auto_Bay1_VFD_Run*) (**)  OTE  [5,0] (*_IO_EM_DO_04*) (*DO_Bay1_VFD_Run*)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,22] (**) (**)  FB  [1,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*G_SYSTEM_MODE*) (**)  , (*i2:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Auto_Bay2_Damper_Solenoid*) (**)  OTE  [5,0] (*_IO_EM_DO_02*) (*DO_Bay2_Damper_Solenoid*)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,26] (**) (**)  FB  [1,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*G_SYSTEM_MODE*) (**)  , (*i2:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Auto_Bay2_VFD_Run*) (**)  OTE  [5,0] (*_IO_EM_DO_05*) (*DO_Bay2_VFD_Run*)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,30] (**) (**)  FB  [1,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*G_SYSTEM_MODE*) (**)  , (*i2:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Auto_Bay3_Damper_Solenoid*) (**)  OTE  [5,0] (*_IO_EM_DO_03*) (*DO_Bay3_Damper_Solenoid*)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,34] (**) (**)  FB  [1,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*G_SYSTEM_MODE*) (**)  , (*i2:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Auto_Bay3_VFD_Run*) (**)  OTE  [5,0] (*_IO_EM_DO_06*) (*DO_Bay3_VFD_Run*)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,38] (**) (**)  FB  [1,0] (*=*) (*16*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*G_SYSTEM_MODE*) (**)  , (*i2:*)(*CFG_AUTO_SYSTEM_MODE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*20*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Auto_SupplyFan_SpeedCmd*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Supply_Fan_Speed_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*21*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Auto_ExhaustFan_SpeedCmd*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Supply_Fan_Speed_Cmd*) (**) )  FB  [10,0] (*1 gain*) (*22*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Auto_End_Damper_Cmd*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_End_Damper_Position*) (**) )
+EOR [13,0]
+
+
+(**)
+
+SOR  [0,42] (**) (**)
+EOR [1,0]
+
+
+(**)
+
+SOR  [0,43] (**) (**)  XIC  [1,0] (*ALARM_L2_Active*) (**)  OTR  [2,0] (*_IO_EM_DO_01*) (*DO_Bay1_Damper_Solenoid*)
+EOR [3,0]
+
+
+(**)
+
+SOR  [0,45] (**) (**)  XIC  [1,0] (*ALARM_L2_Active*) (**)  OTR  [2,0] (*_IO_EM_DO_02*) (*DO_Bay2_Damper_Solenoid*)
+EOR [3,0]
+
+
+(**)
+
+SOR  [0,47] (**) (**)  XIC  [1,0] (*ALARM_L2_Active*) (**)  OTR  [2,0] (*_IO_EM_DO_03*) (*DO_Bay3_Damper_Solenoid*)
+EOR [3,0]
+
+
+(**)
+
+SOR  [0,49] (**) (**)  XIC  [1,0] (*ALARM_L2_Active*) (**)  FB  [2,0] (*1 gain*) (*17*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_End_Damper_Position*) (**) )
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,52] (**) (**)  FB  [1,0] (*=*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**)  , (*i2:*)(*SYSTEM_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*VAR_Burner_Enable_Output*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,56] (**) (**)  FB  [1,0] (*=*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**)  , (*i2:*)(*SYSTEM_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_01*) (*DO_Bay1_Damper_Solenoid*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,60] (**) (**)  FB  [1,0] (*=*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**)  , (*i2:*)(*SYSTEM_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_02*) (*DO_Bay2_Damper_Solenoid*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,64] (**) (**)  FB  [1,0] (*=*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**)  , (*i2:*)(*SYSTEM_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_03*) (*DO_Bay3_Damper_Solenoid*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,68] (**) (**)  FB  [1,0] (*=*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**)  , (*i2:*)(*SYSTEM_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_04*) (*DO_Bay1_VFD_Run*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,72] (**) (**)  FB  [1,0] (*=*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**)  , (*i2:*)(*SYSTEM_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_05*) (*DO_Bay2_VFD_Run*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,76] (**) (**)  FB  [1,0] (*=*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**)  , (*i2:*)(*SYSTEM_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_06*) (*DO_Bay3_VFD_Run*)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,80] (**) (**)  FB  [1,0] (*=*) (*18*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**)  , (*i2:*)(*SYSTEM_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*19*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_End_Damper_Position*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,84] (**) (**)
+EOR [1,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=12
+NextId=22
 #end_info
 END_PROGRAM
