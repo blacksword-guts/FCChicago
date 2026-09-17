@@ -93,13 +93,19 @@ EOR [6,0]
 
 (**)
 
-SOR  [0,55] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIO  [4,0] (*Bay1.VAR_Bay_Active_Flag*) (**)  XIO  [5,0] (*Bay2.VAR_Bay_Active_Flag*) (**)  XIO  [6,0] (*Bay3.VAR_Bay_Active_Flag*) (**)  OTE  [7,0] (*All_Bays_Inactive*) (**)
+SOR  [0,55] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  OTS  [4,0] (*Auto_Burner_Cmd*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,59] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIO  [4,0] (*Bay1.VAR_Bay_Active_Flag*) (**)  XIO  [5,0] (*Bay2.VAR_Bay_Active_Flag*) (**)  XIO  [6,0] (*Bay3.VAR_Bay_Active_Flag*) (**)  OTE  [7,0] (*All_Bays_Inactive*) (**)
 EOR [8,0]
 
 
 (**)
 
-SOR  [0,59] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Cycle_Has_Started*) (**)  
+SOR  [0,63] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Cycle_Has_Started*) (**)  
  BST  XIC  [5,0] (*All_Bays_Inactive*) (**)
    NXB  XIC  [5,1] (*VAR_HMI_Stop_PB*) (**)
  BND
@@ -109,53 +115,53 @@ EOR [9,0]
 
 (**)
 
-SOR  [0,63] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*VAR_Burner_Enable_Output*) (**)
+SOR  [0,67] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*Auto_Burner_Cmd*) (**)
 EOR [5,0]
 
 
 (*Bay Damper and VFD Run (STOPS) are controlled by the by the bay instances themselves.*)
 
-SOR  [0,67] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*27*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_End_Damper_Position*) (**) )
-EOR [7,0]
-
-
-(**)
-
-SOR  [0,71] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_01*) (*DO_Bay1_Damper_Solenoid*)
-EOR [5,0]
-
-
-(**)
-
-SOR  [0,75] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_02*) (*DO_Bay2_Damper_Solenoid*)
-EOR [5,0]
-
-
-(**)
-
-SOR  [0,79] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*_IO_EM_DO_03*) (*DO_Bay3_Damper_Solenoid*)
-EOR [5,0]
-
-
-(**)
-
-SOR  [0,83] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*28*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_Cooldown_Fan_Speed_Hz*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Supply_Fan_Speed_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*29*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_Cooldown_Fan_Speed_Hz*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*AO_Exhaust_Fan_Speed_Cmd*) (**) )  FB  [10,0] (*TON*) (*CooldownTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*CFG_Cooldown_Time_SP*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )  XIC  [13,0] (*CooldownTimer.Q*) (*Q*)  FB  [14,0] (*1 gain*) (*30*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_IDLE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
-EOR [17,0]
-
-
-(**)
-
-SOR  [0,87] (**) (**)  FB  [1,0] (*MasterFanControl*) (*MasterFanControl_1*) ( (*EN:EN*)(**) (**)  , (*PROFILE:*)(*SYSTEM_STATE*) (**)  , (*VAR_Active_Bay_Count:*)(*VAR_Active_Bay_Count*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_Supply_Fan_Speed_Cmd:*)(*Auto_SupplyFan_SpeedCmd*) (**)  , (*VAR_Exhaust_Fan_Speed_Cmd:*)(*Auto_ExhaustFan_SpeedCmd*) (**) )
+SOR  [0,71] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )
 EOR [4,0]
 
 
 (**)
 
-SOR  [0,91] (**) (**)  FB  [1,0] (*MasterEndDamperControl*) (*MasterEndDamperControl_1*) ( (*EN:EN*)(**) (**)  , (*PROFILE:*)(*SYSTEM_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_End_Damper_Position:*)(*Auto_End_Damper_Cmd*) (**) )
+SOR  [0,75] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*Auto_Bay1_Damper_Solenoid*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,79] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*Auto_Bay2_Damper_Solenoid*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,83] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*Auto_Bay3_Damper_Solenoid*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,87] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*TON*) (*CooldownTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*CFG_Cooldown_Time_SP*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )  XIC  [7,0] (*CooldownTimer.Q*) (*Q*)  FB  [8,0] (*1 gain*) (*30*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_IDLE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
+EOR [11,0]
+
+
+(**)
+
+SOR  [0,91] (**) (**)  FB  [1,0] (*MasterFanControl*) (*MasterFanControl_1*) ( (*EN:EN*)(**) (**)  , (*PROFILE:*)(*SYSTEM_STATE*) (**)  , (*VAR_Active_Bay_Count:*)(*VAR_Active_Bay_Count*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_Supply_Fan_Speed_Cmd:*)(*Auto_SupplyFan_SpeedCmd*) (**)  , (*VAR_Exhaust_Fan_Speed_Cmd:*)(*Auto_ExhaustFan_SpeedCmd*) (**) )
+EOR [4,0]
+
+
+(**)
+
+SOR  [0,95] (**) (**)  FB  [1,0] (*MasterEndDamperControl*) (*MasterEndDamperControl_1*) ( (*EN:EN*)(**) (**)  , (*PROFILE:*)(*SYSTEM_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_End_Damper_Position:*)(*Auto_End_Damper_Cmd*) (**) )
 EOR [4,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=33
+NextId=35
 #end_info
 END_PROGRAM

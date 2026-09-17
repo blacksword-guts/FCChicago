@@ -23,13 +23,13 @@ EOR [7,0]
 
 (**)
 
-SOR  [0,13] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*VAR_Exhaust_Plenum_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [7,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Highest_Temp*) (**) )
+SOR  [0,13] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*VAR_Exhaust_Plenum_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [7,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Highest_Temp*) (**) )
 EOR [10,0]
 
 
 (**)
 
-SOR  [0,17] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*VAR_Supply_Plenum_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [7,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Highest_Temp*) (**) )
+SOR  [0,17] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*>=*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*VAR_Supply_Plenum_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [7,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Highest_Temp*) (**) )
 EOR [10,0]
 
 
@@ -49,9 +49,21 @@ EOR [7,0]
 
 SOR  [0,32] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*PROFILE*) (**)  , (*i2:*)(*CFG_FAULT_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_End_Damper_Position*) (**) )
 EOR [7,0]
+
+
+(**)
+
+SOR  [0,36] (**) (**)  FB  [1,0] (*<*) (*5*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_End_Damper_Position*) (**)  , (*i2:*)(*0*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*6*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*0.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_End_Damper_Position*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,40] (**) (**)  FB  [1,0] (*>*) (*7*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_End_Damper_Position*) (**)  , (*i2:*)(*65535.0*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*6*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*65535.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_End_Damper_Position*) (**) )
+EOR [7,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=2
+NextId=7
 #end_info
 END_FUNCTION_BLOCK
