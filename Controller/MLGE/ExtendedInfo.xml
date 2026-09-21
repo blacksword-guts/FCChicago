@@ -21,6 +21,9 @@
   <AcfElementGuid Guid="8ede3599-373c-49b5-a855-06f71a1b1165">
     <File>Automatic_Controls.AcfMlge</File>
   </AcfElementGuid>
+  <AcfElementGuid Guid="96ed50f0-6fbb-433f-ad64-d956ff55a190">
+    <File>HMI_SpinningIcon.AcfMlge</File>
+  </AcfElementGuid>
   <AcfElementGuid Guid="a672b4d1-7ab9-4edf-a392-dbaf181a2c1a">
     <File>Safety_Interlocks.AcfMlge</File>
   </AcfElementGuid>

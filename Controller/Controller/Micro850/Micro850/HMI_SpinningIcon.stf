@@ -1,0 +1,33 @@
+FUNCTION_BLOCK HMI_SpinningIcon
+#info= QLD
+BOF
+
+
+(**)
+
+SOR  [0,1] (**) (**)  XIC  [1,0] (*Active*) (**)  XIO  [2,0] (*FrameTimer.Q*) (*Q*)  FB  [3,0] (*TON*) (*FrameTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*T#250ms*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,4] (**) (**)  XIC  [1,0] (*FrameTimer.Q*) (*Q*)  FB  [2,0] (*+*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Active_Frame*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Active_Frame*) (**) )  FB  [5,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*T#0ms*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*FrameTimer.ET*) (**) )
+EOR [8,0]
+
+
+(**)
+
+SOR  [0,8] (**) (**)  FB  [1,0] (*>*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*Active_Frame*) (**)  , (*i2:*)(*1*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Active_Frame*) (**) )
+EOR [7,0]
+
+
+(**)
+
+SOR  [0,12] (**) (**)  XIO  [1,0] (*Active*) (**)  FB  [2,0] (*1 gain*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Active_Frame*) (**) )
+EOR [5,0]
+EOF
+#end_info
+#info= ID_MAX
+NextId=3
+#end_info
+END_FUNCTION_BLOCK

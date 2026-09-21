@@ -5,77 +5,99 @@ BOF
 
 (**)
 
-SOR  [0,1] (**) (**)  XIO  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)
-EOR [2,0]
-
-
-(**)
-
-SOR  [0,3] (**) (**)  XIC  [1,0] (*_IO_EM_DI_01*) (*DI_SupplyFan_Proof*)  FB  [2,0] (*TON*) (*SupplyProofTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*T#10s*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )
+SOR  [0,1] (**) (**)  XIC  [1,0] (*_IO_EM_DI_01*) (*DI_SupplyFan_Proof*)  FB  [2,0] (*TON*) (*SupplyProofTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*T#10s*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )
 EOR [5,0]
 
 
 (**)
 
-SOR  [0,6] (**) (**)  XIC  [1,0] (*_IO_EM_DI_02*) (*DI_ExhaustFan_Proof*)  FB  [2,0] (*TON*) (*ExhaustProofTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*T#10s*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )
+SOR  [0,4] (**) (**)  XIC  [1,0] (*_IO_EM_DI_02*) (*DI_ExhaustFan_Proof*)  FB  [2,0] (*TON*) (*ExhaustProofTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*T#10s*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )
 EOR [5,0]
 
 
 (**)
 
-SOR  [0,9] (**) (**)  XIC  [1,0] (*_IO_EM_DI_03*) (*DI_EndDamper_Open_Proof*)  FB  [2,0] (*TON*) (*PurgeTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*CFG_Purge_Duration*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )
+SOR  [0,7] (**) (**)  XIC  [1,0] (*_IO_EM_DI_03*) (*DI_EndDamper_Open_Proof*)  FB  [2,0] (*TON*) (*PurgeTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*CFG_Purge_Duration*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )
 EOR [5,0]
 
 
 (**)
 
-SOR  [0,12] (**) (**)  FB  [1,0] (*<*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*<*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*AI_Ambient_Temp*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )
+SOR  [0,10] (**) (**)  FB  [1,0] (*<*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*<*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*AI_Ambient_Temp*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )
 EOR [7,0]
 
 
 (**)
 
-SOR  [0,16] (**) (**)  XIO  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)  XIC  [2,0] (*SupplyProofTimer.Q*) (*Q*)  XIC  [3,0] (*ExhaustProofTimer.Q*) (*Q*)  XIC  [4,0] (*PurgeTimer.Q*) (*Q*)  OTE  [5,0] (*Burner_Enable_Permissive*) (**)
-EOR [6,0]
+SOR  [0,14] (**) (**)  XIC  [1,0] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)  XIC  [2,0] (*SupplyProofTimer.Q*) (*Q*)  XIC  [3,0] (*ExhaustProofTimer.Q*) (*Q*)  XIC  [4,0] (*PurgeTimer.Q*) (*Q*)  XIO  [5,0] (*ALARM_L2_Active*) (**)  XIO  [6,0] (*ALARM_L3_Active*) (**)  OTE  [7,0] (*Burner_Enable_Permissive*) (**)
+EOR [8,0]
 
 
 (**)
 
-SOR  [0,18] (**) (**)
-EOR [1,0]
-
-
-(**)
-
-SOR  [0,19] (**) (**)  FB  [1,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_00*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )  OTE  [4,0] (*ALARM_L2_Active*) (**)
+SOR  [0,16] (**) (**)  
+ BST  FB  [1,0] (*>=*) (*5*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )
+   NXB  FB  [1,3] (*>=*) (*6*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )
+ BND
+  OTS  [4,0] (*ALARM_L1_Active*) (**)
 EOR [5,0]
 
 
 (**)
 
-SOR  [0,23] (**) (**)  FB  [1,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_01*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )  OTS  [4,0] (*ALARM_L2_Active*) (**)
+SOR  [0,23] (**) (**)  
+ BST  FB  [1,0] (*<*) (*11*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )
+   NXB  FB  [1,3] (*<*) (*12*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )
+ BND
+  OTR  [4,0] (*ALARM_L1_Active*) (**)
 EOR [5,0]
 
 
 (**)
 
-SOR  [0,27] (**) (**)  FB  [1,0] (*<=*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_00*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*<=*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*_IO_X1_AI_01*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )  XIC  [7,0] (*VAR_HMI_Reset_PB*) (**)  OTR  [8,0] (*ALARM_L2_Active*) (**)
+SOR  [0,30] (**) (**)  
+ BST  FB  [1,0] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )
+   NXB  FB  [1,3] (*>=*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_High_Temp*) (**) ; (*o1:*)(**) (**) )
+ BND
+  OTS  [4,0] (*ALARM_L2_Active*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,37] (**) (**)  FB  [1,0] (*<=*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*<=*) (*4*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*CFG_High_Temp*) (**) ; (*o1:*)(**) (**) )  XIC  [7,0] (*VAR_HMI_Reset_PB*) (**)  OTR  [8,0] (*ALARM_L2_Active*) (**)
 EOR [9,0]
 
 
 (**)
 
-SOR  [0,31] (**) (**)
-EOR [1,0]
+SOR  [0,41] (**) (**)  
+ BST  FB  [1,0] (*>=*) (*7*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Supply_Plenum_Temp*) (**)  , (*i2:*)(*CFG_Critical_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*14*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_CRITICAL_TEMP_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
+   NXB  
+ BST  FB  [1,3] (*>=*) (*8*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*CFG_Critical_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [4,3] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_CRITICAL_TEMP_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
+   NXB  
+ BST  XIO  [1,6] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)  FB  [2,6] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_E_STOP_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
+   NXB  
+ BST  XIO  [1,8] (*_IO_EM_DI_01*) (*DI_SupplyFan_Proof*)  FB  [2,8] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_AIRFLOW_LOST_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
+   NXB  XIO  [1,10] (*_IO_EM_DI_02*) (*DI_ExhaustFan_Proof*)  FB  [2,10] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_AIRFLOW_LOST_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
+ BND
+
+ BND
+
+ BND
+
+ BND
+  FB  [7,0] (*1 gain*) (*13*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_FAULT_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )  OTS  [10,0] (*ALARM_L3_Active*) (**)
+EOR [11,0]
 
 
 (**)
 
-SOR  [0,32] (**) (**)
+SOR  [0,54] (**) (**)
 EOR [1,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=4
+NextId=15
 #end_info
 END_PROGRAM
