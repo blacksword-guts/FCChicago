@@ -1,0 +1,726 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB1 := _IO_EM_DI_05 ;
+__EDTB2 := _IO_EM_DI_06 ;
+__EDTB3 := _IO_EM_DI_07 ;
+__EDTB4 := (__EDTB2 OR __EDTB3) ;
+VAR_BASKET_PRESENT := (__EDTB1 OR __EDTB4) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Rung **********************************)
+(*IDLE is the default system state. But if the system is in idle, the start pb is pushed and atleast one basket is present, all the bay dampers are closed and the supply and exhaust fan speeds match the config then we move on to pre purge cycle*)
+__STEPPRAGMA
+0,5
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB6 := TRUE ;
+IF __EDTB6 THEN
+(* Operator output on : = with __EDTB5 *)
+__EDTB5 := (SYSTEM_STATE = CFG_IDLE_STATE) ;
+ELSE
+__EDTB5 := FALSE ;
+END_IF ;
+__MO_EQUAL_1 := __EDTB5 ;
+__EDTB7 := __EDTB5 AND VAR_HMI_START_PB AND VAR_BASKET_PRESENT AND _IO_EM_DI_03 AND NOT(_IO_EM_DO_01) AND NOT(_IO_EM_DO_02) AND NOT(_IO_EM_DO_03) ;
+IF __EDTB7 THEN
+AUTO_END_DAMPER_CMD := (  65535.0) ;
+END_IF ;
+__MO_1GAIN_1 := __EDTB7 ;
+(* FB call: TON *)
+PrePurge(__EDTB7, CFG_PURGE_DURATION) ;
+__EDTB8 := PrePurge.Q ;
+IF __EDTB8 THEN
+SYSTEM_STATE := (  CFG_PRE_PURGE_CYCLE_STATE) ;
+END_IF ;
+__MO_1GAIN_2 := __EDTB8 ;
+__EDTB9 := __EDTB8 ;
+IF __EDTB9 THEN
+(*Reset coil*)
+CYCLE_HAS_STARTED := FALSE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0002 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,9
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB11 := TRUE ;
+IF __EDTB11 THEN
+(* Operator output on : = with __EDTB10 *)
+__EDTB10 := (SYSTEM_STATE = CFG_PRE_PURGE_CYCLE_STATE) ;
+ELSE
+__EDTB10 := FALSE ;
+END_IF ;
+__MO_EQUAL_2 := __EDTB10 ;
+__EDTB13 := __EDTB10 ;
+IF __EDTB13 THEN
+(* Operator output on : < with __EDTB12 *)
+__EDTB12 := (VAR_SUPPLY_PLENUM_TEMP < CFG_HIGH_HIGH_TEMP) ;
+ELSE
+__EDTB12 := FALSE ;
+END_IF ;
+__MO_LESS_1 := __EDTB12 ;
+__EDTB15 := __EDTB12 ;
+IF __EDTB15 THEN
+(* Operator output on : < with __EDTB14 *)
+__EDTB14 := (VAR_EXHAUST_PLENUM_TEMP < CFG_HIGH_HIGH_TEMP) ;
+ELSE
+__EDTB14 := FALSE ;
+END_IF ;
+__MO_LESS_2 := __EDTB14 ;
+__EDTB17 := __EDTB14 ;
+IF __EDTB17 THEN
+(* Operator output on : < with __EDTB16 *)
+__EDTB16 := (AI_AMBIENT_TEMP < CFG_HIGH_HIGH_TEMP) ;
+ELSE
+__EDTB16 := FALSE ;
+END_IF ;
+__MO_LESS_3 := __EDTB16 ;
+__EDTB18 := __EDTB16 AND PREPURGE.Q ;
+IF __EDTB18 THEN
+SYSTEM_STATE := (  CFG_BURNER_PERMISSIVE_STATE) ;
+END_IF ;
+__MO_1GAIN_3 := __EDTB18 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0003 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,13
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB20 := TRUE ;
+IF __EDTB20 THEN
+(* Operator output on : = with __EDTB19 *)
+__EDTB19 := (SYSTEM_STATE = CFG_BURNER_PERMISSIVE_STATE) ;
+ELSE
+__EDTB19 := FALSE ;
+END_IF ;
+__MO_EQUAL_3 := __EDTB19 ;
+__EDTB21 := __EDTB19 AND VAR_HMI_BURNER_IGNITE_CONFIRM AND NOT(ALARM_L2_ACTIVE) ;
+IF __EDTB21 THEN
+AUTO_END_DAMPER_CMD := (  0.0) ;
+END_IF ;
+__MO_1GAIN_4 := __EDTB21 ;
+__EDTB22 := __EDTB21 ;
+IF __EDTB22 THEN
+SYSTEM_STATE := (  CFG_ACTIVE_STATE) ;
+END_IF ;
+__MO_1GAIN_5 := __EDTB22 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0004 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,17
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB24 := TRUE ;
+IF __EDTB24 THEN
+(* Operator output on : = with __EDTB23 *)
+__EDTB23 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB23 := FALSE ;
+END_IF ;
+__MO_EQUAL_4 := __EDTB23 ;
+__EDTB25 := __EDTB23 AND NOT(ALARM_L2_ACTIVE) ;
+IF __EDTB25 THEN
+(* FB call: BayControlModule *)
+Bay1(VAR_BAY1_TEMP, VAR_BAY1_START_REQ, CFG_BAY1_RUN_TIME) ;
+AUTO_BAY1_VFD_RUN := Bay1.VAR_Basket_VFD_Run ;
+AUTO_BAY1_DAMPER_SOLENOID := Bay1.VAR_Damper_Solenoid_Cmd ;
+VAR_BAY1_TIMER_ET := Bay1.VAR_Elapsed_Time ;
+END_IF ;
+__MO_BAYCONTROLMODULE_1 := __EDTB25 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0005 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,23
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB27 := TRUE ;
+IF __EDTB27 THEN
+(* Operator output on : = with __EDTB26 *)
+__EDTB26 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB26 := FALSE ;
+END_IF ;
+__MO_EQUAL_5 := __EDTB26 ;
+__EDTB28 := __EDTB26 AND NOT(ALARM_L2_ACTIVE) ;
+IF __EDTB28 THEN
+(* FB call: BayControlModule *)
+Bay2(VAR_BAY2_TEMP, VAR_BAY2_START_REQ, CFG_BAY2_RUN_TIME) ;
+AUTO_BAY2_VFD_RUN := Bay2.VAR_Basket_VFD_Run ;
+AUTO_BAY2_DAMPER_SOLENOID := Bay2.VAR_Damper_Solenoid_Cmd ;
+VAR_BAY2_TIMER_ET := Bay2.VAR_Elapsed_Time ;
+END_IF ;
+__MO_BAYCONTROLMODULE_2 := __EDTB28 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0006 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,29
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB30 := TRUE ;
+IF __EDTB30 THEN
+(* Operator output on : = with __EDTB29 *)
+__EDTB29 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB29 := FALSE ;
+END_IF ;
+__MO_EQUAL_6 := __EDTB29 ;
+__EDTB31 := __EDTB29 AND NOT(ALARM_L2_ACTIVE) ;
+IF __EDTB31 THEN
+(* FB call: BayControlModule *)
+Bay3(VAR_BAY3_TEMP, VAR_BAY3_START_REQ, CFG_BAY3_RUN_TIME) ;
+AUTO_BAY3_VFD_RUN := Bay3.VAR_Basket_VFD_Run ;
+AUTO_BAY3_DAMPER_SOLENOID := Bay3.VAR_Damper_Solenoid_Cmd ;
+VAR_BAY3_TIMER_ET := Bay3.VAR_Elapsed_Time ;
+END_IF ;
+__MO_BAYCONTROLMODULE_3 := __EDTB31 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0007 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,35
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB33 := TRUE ;
+IF __EDTB33 THEN
+(* Operator output on : = with __EDTB32 *)
+__EDTB32 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB32 := FALSE ;
+END_IF ;
+__MO_EQUAL_7 := __EDTB32 ;
+__EDTB34 := __EDTB32 ;
+IF __EDTB34 THEN
+VAR_ACTIVE_BAY_COUNT := (  0.0) ;
+END_IF ;
+__MO_1GAIN_6 := __EDTB34 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0008 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,39
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB36 := TRUE ;
+IF __EDTB36 THEN
+(* Operator output on : = with __EDTB35 *)
+__EDTB35 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB35 := FALSE ;
+END_IF ;
+__MO_EQUAL_8 := __EDTB35 ;
+__EDTB37 := __EDTB35 AND BAY1.VAR_BAY_ACTIVE_FLAG ;
+IF __EDTB37 THEN
+VAR_ACTIVE_BAY_COUNT := (VAR_ACTIVE_BAY_COUNT + 1.0) ;
+END_IF ;
+__MO_PLUS_1 := __EDTB37 ;
+ACTIVE_BAY_MASK.0 := __EDTB37 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0009 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,43
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB39 := TRUE ;
+IF __EDTB39 THEN
+(* Operator output on : = with __EDTB38 *)
+__EDTB38 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB38 := FALSE ;
+END_IF ;
+__MO_EQUAL_9 := __EDTB38 ;
+__EDTB40 := __EDTB38 AND BAY2.VAR_BAY_ACTIVE_FLAG ;
+IF __EDTB40 THEN
+VAR_ACTIVE_BAY_COUNT := (VAR_ACTIVE_BAY_COUNT + 1.0) ;
+END_IF ;
+__MO_PLUS_2 := __EDTB40 ;
+ACTIVE_BAY_MASK.1 := __EDTB40 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG000A ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,47
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB42 := TRUE ;
+IF __EDTB42 THEN
+(* Operator output on : = with __EDTB41 *)
+__EDTB41 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB41 := FALSE ;
+END_IF ;
+__MO_EQUAL_10 := __EDTB41 ;
+__EDTB43 := __EDTB41 AND BAY3.VAR_BAY_ACTIVE_FLAG ;
+IF __EDTB43 THEN
+VAR_ACTIVE_BAY_COUNT := (VAR_ACTIVE_BAY_COUNT + 1.0) ;
+END_IF ;
+__MO_PLUS_3 := __EDTB43 ;
+ACTIVE_BAY_MASK.2 := __EDTB43 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG000B ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,51
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB45 := TRUE ;
+IF __EDTB45 THEN
+(* Operator output on : = with __EDTB44 *)
+__EDTB44 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB44 := FALSE ;
+END_IF ;
+__MO_EQUAL_11 := __EDTB44 ;
+__EDTB46 := __EDTB44 AND BAY1.VAR_BAY_ACTIVE_FLAG ;
+__EDTB47 := __EDTB44 AND BAY2.VAR_BAY_ACTIVE_FLAG ;
+__EDTB48 := __EDTB44 AND BAY3.VAR_BAY_ACTIVE_FLAG ;
+__EDTB49 := (__EDTB47 OR __EDTB48) ;
+__EDTB50 := (__EDTB46 OR __EDTB49) ;
+IF __EDTB50 THEN
+(*Set coil*)
+CYCLE_HAS_STARTED := TRUE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG000C ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,55
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB52 := TRUE ;
+IF __EDTB52 THEN
+(* Operator output on : = with __EDTB51 *)
+__EDTB51 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB51 := FALSE ;
+END_IF ;
+__MO_EQUAL_12 := __EDTB51 ;
+__EDTB53 := __EDTB51 ;
+IF __EDTB53 THEN
+(*Set coil*)
+AUTO_BURNER_CMD := TRUE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG000D ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,59
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB55 := TRUE ;
+IF __EDTB55 THEN
+(* Operator output on : = with __EDTB54 *)
+__EDTB54 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB54 := FALSE ;
+END_IF ;
+__MO_EQUAL_13 := __EDTB54 ;
+ALL_BAYS_INACTIVE := __EDTB54 AND NOT(BAY1.VAR_BAY_ACTIVE_FLAG) AND NOT(BAY2.VAR_BAY_ACTIVE_FLAG) AND NOT(BAY3.VAR_BAY_ACTIVE_FLAG) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG000E ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,63
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB57 := TRUE ;
+IF __EDTB57 THEN
+(* Operator output on : = with __EDTB56 *)
+__EDTB56 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB56 := FALSE ;
+END_IF ;
+__MO_EQUAL_14 := __EDTB56 ;
+__EDTB58 := __EDTB56 AND CYCLE_HAS_STARTED ;
+__EDTB59 := __EDTB58 AND ALL_BAYS_INACTIVE ;
+__EDTB60 := __EDTB58 AND VAR_HMI_STOP_PB ;
+__EDTB61 := (__EDTB59 OR __EDTB60) ;
+IF __EDTB61 THEN
+SYSTEM_STATE := (  CFG_SYSTEM_COOLDOWN_STATE) ;
+END_IF ;
+__MO_1GAIN_7 := __EDTB61 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG000F ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,67
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB63 := TRUE ;
+IF __EDTB63 THEN
+(* Operator output on : = with __EDTB62 *)
+__EDTB62 := (SYSTEM_STATE = CFG_SYSTEM_COOLDOWN_STATE) ;
+ELSE
+__EDTB62 := FALSE ;
+END_IF ;
+__MO_EQUAL_15 := __EDTB62 ;
+__EDTB64 := __EDTB62 ;
+IF __EDTB64 THEN
+(*Reset coil*)
+AUTO_BURNER_CMD := FALSE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0010 ;
+
+
+(*************** Rung **********************************)
+(*Bay Damper and VFD Run (STOPS) are controlled by the by the bay instances themselves.*)
+__STEPPRAGMA
+0,71
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB66 := TRUE ;
+IF __EDTB66 THEN
+(* Operator output on : = with __EDTB65 *)
+__EDTB65 := (SYSTEM_STATE = CFG_SYSTEM_COOLDOWN_STATE) ;
+ELSE
+__EDTB65 := FALSE ;
+END_IF ;
+__MO_EQUAL_16 := __EDTB65 ;
+__EDTB67 := __EDTB65 ;
+IF __EDTB67 THEN
+VAR_BAY1_START_REQ := (  FALSE) ;
+END_IF ;
+__MO_1GAIN_8 := __EDTB67 ;
+__EDTB68 := __EDTB67 ;
+IF __EDTB68 THEN
+VAR_BAY2_START_REQ := (  FALSE) ;
+END_IF ;
+__MO_1GAIN_9 := __EDTB68 ;
+__EDTB69 := __EDTB68 ;
+IF __EDTB69 THEN
+VAR_BAY3_START_REQ := (  FALSE) ;
+END_IF ;
+__MO_1GAIN_10 := __EDTB69 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0011 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,75
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB71 := TRUE ;
+IF __EDTB71 THEN
+(* Operator output on : = with __EDTB70 *)
+__EDTB70 := (SYSTEM_STATE = CFG_SYSTEM_COOLDOWN_STATE) ;
+ELSE
+__EDTB70 := FALSE ;
+END_IF ;
+__MO_EQUAL_17 := __EDTB70 ;
+(* FB call: TON *)
+CooldownTimer(__EDTB70, CFG_COOLDOWN_TIME_SP) ;
+__EDTB72 := CooldownTimer.Q AND COOLDOWNTIMER.Q ;
+IF __EDTB72 THEN
+SYSTEM_STATE := (  CFG_IDLE_STATE) ;
+END_IF ;
+__MO_1GAIN_11 := __EDTB72 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0012 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,79
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB74 := TRUE ;
+IF __EDTB74 THEN
+(* Operator output on : = with __EDTB73 *)
+__EDTB73 := (SYSTEM_STATE = CFG_FAULT_STATE) ;
+ELSE
+__EDTB73 := FALSE ;
+END_IF ;
+__MO_EQUAL_18 := __EDTB73 ;
+__EDTB75 := __EDTB73 ;
+IF __EDTB75 THEN
+(*Reset coil*)
+VAR_AUTO_BURNER_CMD := FALSE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0013 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,83
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB76 := TRUE ;
+IF __EDTB76 THEN
+(* FB call: MasterFanControl *)
+MasterFanControl_1(SYSTEM_STATE, VAR_ACTIVE_BAY_COUNT) ;
+AUTO_SUPPLYFAN_SPEEDCMD := MasterFanControl_1.VAR_Supply_Fan_Speed_Cmd ;
+AUTO_EXHAUSTFAN_SPEEDCMD := MasterFanControl_1.VAR_Exhaust_Fan_Speed_Cmd ;
+END_IF ;
+__MO_MASTERFANCONTROL_1 := __EDTB76 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0014 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,87
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB77 := TRUE ;
+IF __EDTB77 THEN
+(* FB call: MasterEndDamperControl *)
+MasterEndDamperControl_1(SYSTEM_STATE) ;
+AUTO_END_DAMPER_CMD := MasterEndDamperControl_1.VAR_End_Damper_Position ;
+END_IF ;
+__MO_MASTERENDDAMPERCONTROL_1 := __EDTB77 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0015 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,90
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: HMI_SpinningIcon *)
+HMI_SpinningIcon_1(BAY1.VAR_BAY_ACTIVE_FLAG) ;
+VAR_BAY1_FRAME := HMI_SpinningIcon_1.Active_Frame ;
+__MO_HMI_SPINNINGICON_1 := BAY1.VAR_BAY_ACTIVE_FLAG ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0016 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,93
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: HMI_SpinningIcon *)
+HMI_SpinningIcon_2(BAY2.VAR_BAY_ACTIVE_FLAG) ;
+VAR_BAY2_FRAME := HMI_SpinningIcon_2.Active_Frame ;
+__MO_HMI_SPINNINGICON_2 := BAY2.VAR_BAY_ACTIVE_FLAG ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0017 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,96
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: HMI_SpinningIcon *)
+HMI_SpinningIcon_3(BAY3.VAR_BAY_ACTIVE_FLAG) ;
+VAR_BAY3_FRAME := HMI_SpinningIcon_3.Active_Frame ;
+__MO_HMI_SPINNINGICON_3 := BAY3.VAR_BAY_ACTIVE_FLAG ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0018 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,99
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB79 := TRUE ;
+IF __EDTB79 THEN
+(* Operator output on : = with __EDTB78 *)
+__EDTB78 := (SYSTEM_STATE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB78 := FALSE ;
+END_IF ;
+__MO_EQUAL_19 := __EDTB78 ;
+(* FB call: TON *)
+TON_1(__EDTB78, T#30S) ;
+(* FB call: DLG *)
+DLG_1(TON_1.Q AND TON_1.Q, TRUE, 1) ;
+__MO_DLG_1 := TON_1.Q AND TON_1.Q ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0019 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,103
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+
+(*************** Code for the end of Rung **************)
+__GL __LG001A ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+(* __EDTB6 *)
+(* __EDTB7 *)
+(* __EDTB8 *)
+(* __EDTB9 *)
+(* __EDTB10 *)
+(* __EDTB11 *)
+(* __EDTB12 *)
+(* __EDTB13 *)
+(* __EDTB14 *)
+(* __EDTB15 *)
+(* __EDTB16 *)
+(* __EDTB17 *)
+(* __EDTB18 *)
+(* __EDTB19 *)
+(* __EDTB20 *)
+(* __EDTB21 *)
+(* __EDTB22 *)
+(* __EDTB23 *)
+(* __EDTB24 *)
+(* __EDTB25 *)
+(* __EDTB26 *)
+(* __EDTB27 *)
+(* __EDTB28 *)
+(* __EDTB29 *)
+(* __EDTB30 *)
+(* __EDTB31 *)
+(* __EDTB32 *)
+(* __EDTB33 *)
+(* __EDTB34 *)
+(* __EDTB35 *)
+(* __EDTB36 *)
+(* __EDTB37 *)
+(* __EDTB38 *)
+(* __EDTB39 *)
+(* __EDTB40 *)
+(* __EDTB41 *)
+(* __EDTB42 *)
+(* __EDTB43 *)
+(* __EDTB44 *)
+(* __EDTB45 *)
+(* __EDTB46 *)
+(* __EDTB47 *)
+(* __EDTB48 *)
+(* __EDTB49 *)
+(* __EDTB50 *)
+(* __EDTB51 *)
+(* __EDTB52 *)
+(* __EDTB53 *)
+(* __EDTB54 *)
+(* __EDTB55 *)
+(* __EDTB56 *)
+(* __EDTB57 *)
+(* __EDTB58 *)
+(* __EDTB59 *)
+(* __EDTB60 *)
+(* __EDTB61 *)
+(* __EDTB62 *)
+(* __EDTB63 *)
+(* __EDTB64 *)
+(* __EDTB65 *)
+(* __EDTB66 *)
+(* __EDTB67 *)
+(* __EDTB68 *)
+(* __EDTB69 *)
+(* __EDTB70 *)
+(* __EDTB71 *)
+(* __EDTB72 *)
+(* __EDTB73 *)
+(* __EDTB74 *)
+(* __EDTB75 *)
+(* __EDTB76 *)
+(* __EDTB77 *)
+(* __EDTB78 *)
+(* __EDTB79 *)
+

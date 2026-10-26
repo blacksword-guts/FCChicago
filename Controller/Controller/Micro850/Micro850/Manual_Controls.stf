@@ -5,8 +5,41 @@ BOF
 
 (**)
 
-SOR  [0,1] (**) (**)
-EOR [1,0]
+SOR  [0,1] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Bay1_Damper_Jog_PB*) (**)  OTE  [5,0] (*Man_Bay1_Damper_Solenoid*) (**)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,5] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Bay2_Damper_Jog_PB*) (**)  OTE  [5,0] (*Man_Bay2_Damper_Solenoid*) (**)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,9] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Bay1_Damper_Jog_PB*) (**)  OTE  [5,0] (*Man_Bay1_Damper_Solenoid*) (**)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,13] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Bay1_VFD_Jog_PB*) (**)  OTE  [5,0] (*Man_Bay1_VFD_Run*) (**)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,17] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Bay2_VFD_Jog_PB*) (**)  OTE  [5,0] (*Man_Bay2_VFD_Run*) (**)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,21] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_IDLE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*VAR_HMI_Bay3_VFD_Jog_PB*) (**)  OTE  [5,0] (*Man_Bay3_VFD_Run*) (**)
+EOR [6,0]
 EOF
+#end_info
+#info= ID_MAX
+NextId=1
 #end_info
 END_PROGRAM

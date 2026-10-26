@@ -55,25 +55,25 @@ EOR [8,0]
 
 (**)
 
-SOR  [0,35] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*25*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
+SOR  [0,35] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*25*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*0.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )
 EOR [7,0]
 
 
 (**)
 
-SOR  [0,39] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Bay1.VAR_Bay_Active_Flag*) (**)  FB  [5,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )  OTE  [8,0] (*Active_Bay_Mask.0*) (**)
+SOR  [0,39] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Bay1.VAR_Bay_Active_Flag*) (**)  FB  [5,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )  OTE  [8,0] (*Active_Bay_Mask.0*) (**)
 EOR [9,0]
 
 
 (**)
 
-SOR  [0,43] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Bay2.VAR_Bay_Active_Flag*) (**)  FB  [5,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )  OTE  [8,0] (*Active_Bay_Mask.1*) (**)
+SOR  [0,43] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Bay2.VAR_Bay_Active_Flag*) (**)  FB  [5,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )  OTE  [8,0] (*Active_Bay_Mask.1*) (**)
 EOR [9,0]
 
 
 (**)
 
-SOR  [0,47] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Bay3.VAR_Bay_Active_Flag*) (**)  FB  [5,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )  OTE  [8,0] (*Active_Bay_Mask.2*) (**)
+SOR  [0,47] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  XIC  [4,0] (*Bay3.VAR_Bay_Active_Flag*) (**)  FB  [5,0] (*+*) (*26*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Active_Bay_Count*) (**)  , (*i2:*)(*1.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Active_Bay_Count*) (**) )  OTE  [8,0] (*Active_Bay_Mask.2*) (**)
 EOR [9,0]
 
 
@@ -121,83 +121,65 @@ EOR [5,0]
 
 (*Bay Damper and VFD Run (STOPS) are controlled by the by the bay instances themselves.*)
 
-SOR  [0,71] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )
-EOR [4,0]
+SOR  [0,71] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*38*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Bay1_Start_Req*) (**) )  FB  [7,0] (*1 gain*) (*38*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Bay2_Start_Req*) (**) )  FB  [10,0] (*1 gain*) (*38*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Bay3_Start_Req*) (**) )
+EOR [13,0]
 
 
 (**)
 
-SOR  [0,75] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*Auto_Bay1_Damper_Solenoid*) (**)
-EOR [5,0]
-
-
-(**)
-
-SOR  [0,79] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*Auto_Bay2_Damper_Solenoid*) (**)
-EOR [5,0]
-
-
-(**)
-
-SOR  [0,83] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*Auto_Bay3_Damper_Solenoid*) (**)
-EOR [5,0]
-
-
-(**)
-
-SOR  [0,87] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*TON*) (*CooldownTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*CFG_Cooldown_Time_SP*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )  XIC  [7,0] (*CooldownTimer.Q*) (*Q*)  FB  [8,0] (*1 gain*) (*30*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_IDLE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
+SOR  [0,75] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_SYSTEM_COOLDOWN_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*TON*) (*CooldownTimer*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*CFG_Cooldown_Time_SP*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )  XIC  [7,0] (*CooldownTimer.Q*) (*Q*)  FB  [8,0] (*1 gain*) (*30*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_IDLE_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*SYSTEM_STATE*) (**) )
 EOR [11,0]
 
 
 (**)
 
-SOR  [0,91] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_FAULT_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*36*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Bay1.VAR_Damper_Solenoid_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*37*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Bay1.VAR_Basket_VFD_Run*) (**) )  OTR  [10,0] (*VAR_Auto_Burner_Cmd*) (**)
+SOR  [0,79] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_FAULT_STATE*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*VAR_Auto_Burner_Cmd*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,83] (**) (**)  FB  [1,0] (*MasterFanControl*) (*MasterFanControl_1*) ( (*EN:EN*)(**) (**)  , (*PROFILE:*)(*SYSTEM_STATE*) (**)  , (*VAR_Active_Bay_Count:*)(*VAR_Active_Bay_Count*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_Supply_Fan_Speed_Cmd:*)(*Auto_SupplyFan_SpeedCmd*) (**)  , (*VAR_Exhaust_Fan_Speed_Cmd:*)(*Auto_ExhaustFan_SpeedCmd*) (**) )
+EOR [4,0]
+
+
+(**)
+
+SOR  [0,87] (**) (**)  FB  [1,0] (*MasterEndDamperControl*) (*MasterEndDamperControl_1*) ( (*EN:EN*)(**) (**)  , (*PROFILE:*)(*SYSTEM_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_End_Damper_Position:*)(*Auto_End_Damper_Cmd*) (**) )
+EOR [4,0]
+
+
+(**)
+
+SOR  [0,90] (**) (**)  XIC  [1,0] (*Bay1.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*HMI_SpinningIcon*) (*HMI_SpinningIcon_1*) ( (*Active:*)(**) (**) ; (*ENO:ENO*)(**) (**)  , (*Active_Frame:*)(*VAR_Bay1_Frame*) (**) )
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,93] (**) (**)  XIC  [1,0] (*Bay2.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*HMI_SpinningIcon*) (*HMI_SpinningIcon_2*) ( (*Active:*)(**) (**) ; (*ENO:ENO*)(**) (**)  , (*Active_Frame:*)(*VAR_Bay2_Frame*) (**) )
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,96] (**) (**)  XIC  [1,0] (*Bay3.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*HMI_SpinningIcon*) (*HMI_SpinningIcon_3*) ( (*Active:*)(**) (**) ; (*ENO:ENO*)(**) (**)  , (*Active_Frame:*)(*VAR_Bay3_Frame*) (**) )
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,99] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_ACTIVE_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*TON*) (*TON_1*) ( (*IN:IN*)(**) (**)  , (*PT:PT*)(*T#30s*) (**) ; (*Q:Q*)(**) (**)  , (*ET:ET*)(**) (**) )  XIC  [7,0] (*TON_1.Q*) (*Q*)  FB  [8,0] (*DLG*) (*DLG_1*) ( (*Enable:*)(**) (**)  , (*TSEnable:*)(*TRUE*) (**)  , (*CfgID:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*Status:*)(**) (**)  , (*ErrorID:*)(**) (**) )
 EOR [11,0]
 
 
 (**)
 
-SOR  [0,95] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_FAULT_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*36*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Bay2.VAR_Damper_Solenoid_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*37*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Bay2.VAR_Basket_VFD_Run*) (**) )
-EOR [10,0]
-
-
-(**)
-
-SOR  [0,99] (**) (**)  FB  [1,0] (*=*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*SYSTEM_STATE*) (**)  , (*i2:*)(*CFG_FAULT_STATE*) (**) ; (*o1:*)(**) (**) )  FB  [4,0] (*1 gain*) (*36*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Bay3.VAR_Damper_Solenoid_Cmd*) (**) )  FB  [7,0] (*1 gain*) (*37*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*FALSE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*Bay3.VAR_Basket_VFD_Run*) (**) )
-EOR [10,0]
-
-
-(**)
-
-SOR  [0,103] (**) (**)  FB  [1,0] (*MasterFanControl*) (*MasterFanControl_1*) ( (*EN:EN*)(**) (**)  , (*PROFILE:*)(*SYSTEM_STATE*) (**)  , (*VAR_Active_Bay_Count:*)(*VAR_Active_Bay_Count*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_Supply_Fan_Speed_Cmd:*)(*Auto_SupplyFan_SpeedCmd*) (**)  , (*VAR_Exhaust_Fan_Speed_Cmd:*)(*Auto_ExhaustFan_SpeedCmd*) (**) )
-EOR [4,0]
-
-
-(**)
-
-SOR  [0,107] (**) (**)  FB  [1,0] (*MasterEndDamperControl*) (*MasterEndDamperControl_1*) ( (*EN:EN*)(**) (**)  , (*PROFILE:*)(*SYSTEM_STATE*) (**) ; (*ENO:ENO*)(**) (**)  , (*VAR_End_Damper_Position:*)(*Auto_End_Damper_Cmd*) (**) )
-EOR [4,0]
-
-
-(**)
-
-SOR  [0,110] (**) (**)  XIC  [1,0] (*Bay1.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*HMI_SpinningIcon*) (*HMI_SpinningIcon_1*) ( (*Active:*)(**) (**) ; (*ENO:ENO*)(**) (**)  , (*Active_Frame:*)(*VAR_Bay1_Frame*) (**) )
-EOR [5,0]
-
-
-(**)
-
-SOR  [0,113] (**) (**)  XIC  [1,0] (*Bay2.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*HMI_SpinningIcon*) (*HMI_SpinningIcon_2*) ( (*Active:*)(**) (**) ; (*ENO:ENO*)(**) (**)  , (*Active_Frame:*)(*VAR_Bay2_Frame*) (**) )
-EOR [5,0]
-
-
-(**)
-
-SOR  [0,116] (**) (**)  XIC  [1,0] (*Bay3.VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*HMI_SpinningIcon*) (*HMI_SpinningIcon_3*) ( (*Active:*)(**) (**) ; (*ENO:ENO*)(**) (**)  , (*Active_Frame:*)(*VAR_Bay3_Frame*) (**) )
-EOR [5,0]
+SOR  [0,103] (**) (**)
+EOR [1,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=37
+NextId=38
 #end_info
 END_PROGRAM

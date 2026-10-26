@@ -18,7 +18,7 @@ EOR [7,0]
 
 (*Make sure the trim is within allowable bounds of +/-5*)
 
-SOR  [0,12] (**) (**)  FB  [1,0] (*RealMin*) (*RealMin_1*) ( (*EN:EN*)(**) (**)  , (*Real_Var1:*)(*VAR_Trim_Hz*) (**)  , (*Real_Var2:*)(*5.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Real_Min_Value:*)(*VAR_Trim_Hz*) (**) )  FB  [4,0] (*RealMax*) (*RealMax_1*) ( (*EN:EN*)(**) (**)  , (*Real_Var1:*)(*VAR_Trim_Hz*) (**)  , (*Real_Var2:*)(*-5.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Real_Max_Value:*)(*VAR_Trim_Hz*) (**) )
+SOR  [0,12] (**) (**)  FB  [1,0] (*RealMin*) (*RealMin_2*) ( (*EN:EN*)(**) (**)  , (*Real_Var1:*)(*VAR_Trim_Hz*) (**)  , (*Real_Var2:*)(*5.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Real_Min_Value:*)(*VAR_Trim_Hz*) (**) )  FB  [4,0] (*RealMax*) (*RealMax_2*) ( (*EN:EN*)(**) (**)  , (*Real_Var1:*)(*VAR_Trim_Hz*) (**)  , (*Real_Var2:*)(*-5.0*) (**) ; (*ENO:ENO*)(**) (**)  , (*Real_Max_Value:*)(*VAR_Trim_Hz*) (**) )
 EOR [7,0]
 
 

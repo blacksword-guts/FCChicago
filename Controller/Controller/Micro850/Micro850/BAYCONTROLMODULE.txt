@@ -1,0 +1,148 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(*If the SPs are greater than the CFG_Minimums, proceed.*)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB2 := TRUE ;
+IF __EDTB2 THEN
+(* Operator output on : >= with __EDTB1 *)
+__EDTB1 := (VAR_RUN_TIME_SP >= VAR_RUN_TIME_SP_MIN) ;
+ELSE
+__EDTB1 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_1 := __EDTB1 ;
+__EDTB4 := __EDTB1 ;
+IF __EDTB4 THEN
+(* Operator output on : >= with __EDTB3 *)
+__EDTB3 := (VAR_TEMP_ACTUAL >= CFG_TEMP_SP_MIN) ;
+ELSE
+__EDTB3 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_2 := __EDTB3 ;
+VAR_VALID_SP := __EDTB3 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Rung **********************************)
+(*Rungs 2-4 control the start cmd, once pressed it activates the damper and the vfd. As well as energizing the bay_active_flag.*)
+__STEPPRAGMA
+0,5
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB5 := VAR_BAY_START_CMD AND VAR_VALID_SP ;
+__EDTB6 := VAR_BAY_ACTIVE_FLAG AND NOT(RTO_1.Q) ;
+VAR_BAY_ACTIVE_FLAG := (__EDTB5 OR __EDTB6) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0002 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,8
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+VAR_DAMPER_SOLENOID_CMD := VAR_BAY_ACTIVE_FLAG ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0003 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,10
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+VAR_BASKET_VFD_RUN := VAR_BAY_ACTIVE_FLAG ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0004 ;
+
+
+(*************** Rung **********************************)
+(*if the flag is active, start timer.*)
+__STEPPRAGMA
+0,12
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: RTO *)
+RTO_1(VAR_BAY_ACTIVE_FLAG, , VAR_RUN_TIME_SP) ;
+VAR_ELAPSED_TIME := RTO_1.ET ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0005 ;
+
+
+(*************** Rung **********************************)
+(*if the flag is active and the tier is done de-energize the bay_active_flag*)
+__STEPPRAGMA
+0,16
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB7 := VAR_BAY_ACTIVE_FLAG AND RTO_1.Q ;
+IF __EDTB7 THEN
+(*Reset coil*)
+VAR_BAY_ACTIVE_FLAG := FALSE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0006 ;
+
+
+(*************** Rung **********************************)
+(*Once timer is completed, close damper.*)
+__STEPPRAGMA
+0,18
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB8 := RTO_1.Q ;
+IF __EDTB8 THEN
+(*Reset coil*)
+VAR_DAMPER_SOLENOID_CMD := FALSE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0007 ;
+
+
+(*************** Rung **********************************)
+(*Once timer is cmpleted, turn off VFD.*)
+__STEPPRAGMA
+0,20
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB9 := RTO_1.Q ;
+IF __EDTB9 THEN
+(*Reset coil*)
+VAR_BASKET_VFD_RUN := FALSE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0008 ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+(* __EDTB6 *)
+(* __EDTB7 *)
+(* __EDTB8 *)
+(* __EDTB9 *)
+

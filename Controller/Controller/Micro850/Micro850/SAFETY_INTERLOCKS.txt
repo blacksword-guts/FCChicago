@@ -1,0 +1,353 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: TON *)
+SupplyProofTimer(_IO_EM_DI_01, T#10S) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,4
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: TON *)
+ExhaustProofTimer(_IO_EM_DI_02, T#10S) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0002 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,7
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: TON *)
+PurgeTimer(_IO_EM_DI_03, CFG_PURGE_DURATION) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0003 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,10
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB2 := TRUE ;
+IF __EDTB2 THEN
+(* Operator output on : < with __EDTB1 *)
+__EDTB1 := (VAR_SUPPLY_PLENUM_TEMP < CFG_HIGH_HIGH_TEMP) ;
+ELSE
+__EDTB1 := FALSE ;
+END_IF ;
+__MO_LESS_1 := __EDTB1 ;
+__EDTB4 := __EDTB1 ;
+IF __EDTB4 THEN
+(* Operator output on : < with __EDTB3 *)
+__EDTB3 := (AI_AMBIENT_TEMP < CFG_HIGH_HIGH_TEMP) ;
+ELSE
+__EDTB3 := FALSE ;
+END_IF ;
+__MO_LESS_2 := __EDTB3 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0004 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,14
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+BURNER_ENABLE_PERMISSIVE := _IO_EM_DI_00 AND SUPPLYPROOFTIMER.Q AND EXHAUSTPROOFTIMER.Q AND PURGETIMER.Q AND NOT(ALARM_L2_ACTIVE) AND NOT(ALARM_L3_ACTIVE) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0005 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,16
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB6 := TRUE ;
+IF __EDTB6 THEN
+(* Operator output on : >= with __EDTB5 *)
+__EDTB5 := (VAR_SUPPLY_PLENUM_TEMP >= CFG_HIGH_TEMP) ;
+ELSE
+__EDTB5 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_1 := __EDTB5 ;
+__EDTB7 := __EDTB5 ;
+__EDTB9 := TRUE ;
+IF __EDTB9 THEN
+(* Operator output on : >= with __EDTB8 *)
+__EDTB8 := (VAR_EXHAUST_PLENUM_TEMP >= CFG_HIGH_TEMP) ;
+ELSE
+__EDTB8 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_2 := __EDTB8 ;
+__EDTB10 := __EDTB8 ;
+__EDTB11 := (__EDTB7 OR __EDTB10) ;
+IF __EDTB11 THEN
+(*Set coil*)
+ALARM_L1_ACTIVE := TRUE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0006 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,23
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB13 := TRUE ;
+IF __EDTB13 THEN
+(* Operator output on : < with __EDTB12 *)
+__EDTB12 := (VAR_SUPPLY_PLENUM_TEMP < CFG_HIGH_TEMP) ;
+ELSE
+__EDTB12 := FALSE ;
+END_IF ;
+__MO_LESS_3 := __EDTB12 ;
+__EDTB14 := __EDTB12 ;
+__EDTB16 := TRUE ;
+IF __EDTB16 THEN
+(* Operator output on : < with __EDTB15 *)
+__EDTB15 := (VAR_EXHAUST_PLENUM_TEMP < CFG_HIGH_TEMP) ;
+ELSE
+__EDTB15 := FALSE ;
+END_IF ;
+__MO_LESS_4 := __EDTB15 ;
+__EDTB17 := __EDTB15 ;
+__EDTB18 := (__EDTB14 OR __EDTB17) ;
+IF __EDTB18 THEN
+(*Reset coil*)
+ALARM_L1_ACTIVE := FALSE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0007 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,30
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB20 := TRUE ;
+IF __EDTB20 THEN
+(* Operator output on : >= with __EDTB19 *)
+__EDTB19 := (VAR_SUPPLY_PLENUM_TEMP >= CFG_HIGH_HIGH_TEMP) ;
+ELSE
+__EDTB19 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_3 := __EDTB19 ;
+__EDTB21 := __EDTB19 ;
+__EDTB23 := TRUE ;
+IF __EDTB23 THEN
+(* Operator output on : >= with __EDTB22 *)
+__EDTB22 := (VAR_EXHAUST_PLENUM_TEMP >= CFG_HIGH_HIGH_TEMP) ;
+ELSE
+__EDTB22 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_4 := __EDTB22 ;
+__EDTB24 := __EDTB22 ;
+__EDTB25 := (__EDTB21 OR __EDTB24) ;
+IF __EDTB25 THEN
+(*Set coil*)
+ALARM_L2_ACTIVE := TRUE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0008 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,37
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB27 := TRUE ;
+IF __EDTB27 THEN
+(* Operator output on : <= with __EDTB26 *)
+__EDTB26 := (VAR_SUPPLY_PLENUM_TEMP <= CFG_HIGH_TEMP) ;
+ELSE
+__EDTB26 := FALSE ;
+END_IF ;
+__MO_LESSEQUAL_1 := __EDTB26 ;
+__EDTB29 := __EDTB26 ;
+IF __EDTB29 THEN
+(* Operator output on : <= with __EDTB28 *)
+__EDTB28 := (VAR_EXHAUST_PLENUM_TEMP <= CFG_HIGH_TEMP) ;
+ELSE
+__EDTB28 := FALSE ;
+END_IF ;
+__MO_LESSEQUAL_2 := __EDTB28 ;
+__EDTB30 := __EDTB28 AND VAR_HMI_RESET_PB ;
+IF __EDTB30 THEN
+(*Reset coil*)
+ALARM_L2_ACTIVE := FALSE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0009 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,41
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB32 := TRUE ;
+IF __EDTB32 THEN
+(* Operator output on : >= with __EDTB31 *)
+__EDTB31 := (VAR_SUPPLY_PLENUM_TEMP >= CFG_CRITICAL_TEMP) ;
+ELSE
+__EDTB31 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_5 := __EDTB31 ;
+__EDTB33 := __EDTB31 ;
+IF __EDTB33 THEN
+VAR_FAULT_CODE := (  CFG_CRITICAL_TEMP_FAULT_CODE) ;
+END_IF ;
+__MO_1GAIN_1 := __EDTB33 ;
+__EDTB34 := __EDTB33 ;
+__EDTB36 := TRUE ;
+IF __EDTB36 THEN
+(* Operator output on : >= with __EDTB35 *)
+__EDTB35 := (VAR_EXHAUST_PLENUM_TEMP >= CFG_CRITICAL_TEMP) ;
+ELSE
+__EDTB35 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_6 := __EDTB35 ;
+__EDTB37 := __EDTB35 ;
+IF __EDTB37 THEN
+VAR_FAULT_CODE := (  CFG_CRITICAL_TEMP_FAULT_CODE) ;
+END_IF ;
+__MO_1GAIN_2 := __EDTB37 ;
+__EDTB38 := __EDTB37 ;
+__EDTB39 := _IO_EM_DI_00 ;
+IF __EDTB39 THEN
+VAR_FAULT_CODE := (  CFG_E_STOP_FAULT_CODE) ;
+END_IF ;
+__MO_1GAIN_3 := __EDTB39 ;
+__EDTB40 := __EDTB39 ;
+__EDTB41 := _IO_EM_DI_01 ;
+IF __EDTB41 THEN
+VAR_FAULT_CODE := (  CFG_AIRFLOW_LOST_FAULT_CODE) ;
+END_IF ;
+__MO_1GAIN_4 := __EDTB41 ;
+__EDTB42 := __EDTB41 ;
+__EDTB43 := _IO_EM_DI_02 ;
+IF __EDTB43 THEN
+VAR_FAULT_CODE := (  CFG_AIRFLOW_LOST_FAULT_CODE) ;
+END_IF ;
+__MO_1GAIN_5 := __EDTB43 ;
+__EDTB44 := __EDTB43 ;
+__EDTB45 := (__EDTB42 OR __EDTB44) ;
+__EDTB46 := (__EDTB40 OR __EDTB45) ;
+__EDTB47 := (__EDTB38 OR __EDTB46) ;
+__EDTB48 := (__EDTB34 OR __EDTB47) ;
+IF __EDTB48 THEN
+SYSTEM_STATE := (  CFG_FAULT_STATE) ;
+END_IF ;
+__MO_1GAIN_6 := __EDTB48 ;
+__EDTB49 := __EDTB48 ;
+IF __EDTB49 THEN
+(*Set coil*)
+ALARM_L3_ACTIVE := TRUE ;
+END_IF ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG000A ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,54
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+
+(*************** Code for the end of Rung **************)
+__GL __LG000B ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+(* __EDTB6 *)
+(* __EDTB7 *)
+(* __EDTB8 *)
+(* __EDTB9 *)
+(* __EDTB10 *)
+(* __EDTB11 *)
+(* __EDTB12 *)
+(* __EDTB13 *)
+(* __EDTB14 *)
+(* __EDTB15 *)
+(* __EDTB16 *)
+(* __EDTB17 *)
+(* __EDTB18 *)
+(* __EDTB19 *)
+(* __EDTB20 *)
+(* __EDTB21 *)
+(* __EDTB22 *)
+(* __EDTB23 *)
+(* __EDTB24 *)
+(* __EDTB25 *)
+(* __EDTB26 *)
+(* __EDTB27 *)
+(* __EDTB28 *)
+(* __EDTB29 *)
+(* __EDTB30 *)
+(* __EDTB31 *)
+(* __EDTB32 *)
+(* __EDTB33 *)
+(* __EDTB34 *)
+(* __EDTB35 *)
+(* __EDTB36 *)
+(* __EDTB37 *)
+(* __EDTB38 *)
+(* __EDTB39 *)
+(* __EDTB40 *)
+(* __EDTB41 *)
+(* __EDTB42 *)
+(* __EDTB43 *)
+(* __EDTB44 *)
+(* __EDTB45 *)
+(* __EDTB46 *)
+(* __EDTB47 *)
+(* __EDTB48 *)
+(* __EDTB49 *)
+

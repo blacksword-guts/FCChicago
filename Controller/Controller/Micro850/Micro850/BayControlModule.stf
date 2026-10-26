@@ -21,47 +21,41 @@ EOR [4,0]
 
 (**)
 
-SOR  [0,8] (**) (**)  XIC  [1,0] (*VAR_Bay_Start_Cmd*) (**)  XIO  [2,0] (*VAR_Bay_Active_Flag*) (**)  OTE  [3,0] (*RTO_1.RST*) (**)
-EOR [4,0]
-
-
-(**)
-
-SOR  [0,10] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  OTE  [2,0] (*VAR_Damper_Solenoid_Cmd*) (**)
+SOR  [0,8] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  OTE  [2,0] (*VAR_Damper_Solenoid_Cmd*) (**)
 EOR [3,0]
 
 
 (**)
 
-SOR  [0,12] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  OTE  [2,0] (*VAR_Basket_VFD_Run*) (**)
+SOR  [0,10] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  OTE  [2,0] (*VAR_Basket_VFD_Run*) (**)
 EOR [3,0]
 
 
 (*if the flag is active, start timer.*)
 
-SOR  [0,14] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*RTO*) (*RTO_1*) ( (*IN:*)(**) (**)  , (*RST:*)(**) (**)  , (*PT:*)(*VAR_Run_Time_SP*) (**) ; (*Q:*)(**) (**)  , (*ET:*)(*VAR_Elapsed_Time*) (**) )
+SOR  [0,12] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  FB  [2,0] (*RTO*) (*RTO_1*) ( (*IN:*)(**) (**)  , (*RST:*)(**) (**)  , (*PT:*)(*VAR_Run_Time_SP*) (**) ; (*Q:*)(**) (**)  , (*ET:*)(*VAR_Elapsed_Time*) (**) )
 EOR [5,0]
 
 
 (*if the flag is active and the tier is done de-energize the bay_active_flag*)
 
-SOR  [0,18] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  XIC  [2,0] (*RTO_1.Q*) (**)  OTR  [3,0] (*VAR_Bay_Active_Flag*) (**)
+SOR  [0,16] (**) (**)  XIC  [1,0] (*VAR_Bay_Active_Flag*) (**)  XIC  [2,0] (*RTO_1.Q*) (**)  OTR  [3,0] (*VAR_Bay_Active_Flag*) (**)
 EOR [4,0]
 
 
 (*Once timer is completed, close damper.*)
 
-SOR  [0,20] (**) (**)  XIC  [1,0] (*RTO_1.Q*) (**)  OTR  [2,0] (*VAR_Damper_Solenoid_Cmd*) (**)
+SOR  [0,18] (**) (**)  XIC  [1,0] (*RTO_1.Q*) (**)  OTR  [2,0] (*VAR_Damper_Solenoid_Cmd*) (**)
 EOR [3,0]
 
 
 (*Once timer is cmpleted, turn off VFD.*)
 
-SOR  [0,22] (**) (**)  XIC  [1,0] (*RTO_1.Q*) (**)  OTR  [2,0] (*VAR_Basket_VFD_Run*) (**)
+SOR  [0,20] (**) (**)  XIC  [1,0] (*RTO_1.Q*) (**)  OTR  [2,0] (*VAR_Basket_VFD_Run*) (**)
 EOR [3,0]
 EOF
 #end_info
 #info= ID_MAX
-NextId=6
+NextId=7
 #end_info
 END_FUNCTION_BLOCK

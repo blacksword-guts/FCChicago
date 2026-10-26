@@ -1,0 +1,303 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB2 := TRUE ;
+IF __EDTB2 THEN
+(* Operator output on : = with __EDTB1 *)
+__EDTB1 := (PROFILE = CFG_IDLE_STATE) ;
+ELSE
+__EDTB1 := FALSE ;
+END_IF ;
+__MO_EQUAL_1 := __EDTB1 ;
+__EDTB3 := __EDTB1 ;
+IF __EDTB3 THEN
+VAR_END_DAMPER_POSITION := (  65535.0) ;
+END_IF ;
+__MO_1GAIN_1 := __EDTB3 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,5
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB5 := TRUE ;
+IF __EDTB5 THEN
+(* Operator output on : = with __EDTB4 *)
+__EDTB4 := (PROFILE = CFG_PRE_PURGE_CYCLE_STATE) ;
+ELSE
+__EDTB4 := FALSE ;
+END_IF ;
+__MO_EQUAL_2 := __EDTB4 ;
+__EDTB6 := __EDTB4 ;
+IF __EDTB6 THEN
+VAR_END_DAMPER_POSITION := (  65535.0) ;
+END_IF ;
+__MO_1GAIN_2 := __EDTB6 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0002 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,9
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB8 := TRUE ;
+IF __EDTB8 THEN
+(* Operator output on : = with __EDTB7 *)
+__EDTB7 := (PROFILE = CFG_BURNER_PERMISSIVE_STATE) ;
+ELSE
+__EDTB7 := FALSE ;
+END_IF ;
+__MO_EQUAL_3 := __EDTB7 ;
+__EDTB9 := __EDTB7 ;
+IF __EDTB9 THEN
+VAR_END_DAMPER_POSITION := (  0.0) ;
+END_IF ;
+__MO_1GAIN_3 := __EDTB9 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0003 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,13
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB11 := TRUE ;
+IF __EDTB11 THEN
+(* Operator output on : = with __EDTB10 *)
+__EDTB10 := (PROFILE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB10 := FALSE ;
+END_IF ;
+__MO_EQUAL_4 := __EDTB10 ;
+__EDTB13 := __EDTB10 ;
+IF __EDTB13 THEN
+(* Operator output on : >= with __EDTB12 *)
+__EDTB12 := (VAR_SUPPLY_PLENUM_TEMP >= VAR_EXHAUST_PLENUM_TEMP) ;
+ELSE
+__EDTB12 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_1 := __EDTB12 ;
+__EDTB14 := __EDTB12 ;
+IF __EDTB14 THEN
+HIGHEST_TEMP := (  VAR_SUPPLY_PLENUM_TEMP) ;
+END_IF ;
+__MO_1GAIN_4 := __EDTB14 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0004 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,17
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB16 := TRUE ;
+IF __EDTB16 THEN
+(* Operator output on : = with __EDTB15 *)
+__EDTB15 := (PROFILE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB15 := FALSE ;
+END_IF ;
+__MO_EQUAL_5 := __EDTB15 ;
+__EDTB18 := __EDTB15 ;
+IF __EDTB18 THEN
+(* Operator output on : >= with __EDTB17 *)
+__EDTB17 := (VAR_EXHAUST_PLENUM_TEMP >= VAR_SUPPLY_PLENUM_TEMP) ;
+ELSE
+__EDTB17 := FALSE ;
+END_IF ;
+__MO_GREATEQUAL_2 := __EDTB17 ;
+__EDTB19 := __EDTB17 ;
+IF __EDTB19 THEN
+HIGHEST_TEMP := (  VAR_EXHAUST_PLENUM_TEMP) ;
+END_IF ;
+__MO_1GAIN_5 := __EDTB19 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0005 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,21
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB21 := TRUE ;
+IF __EDTB21 THEN
+(* Operator output on : = with __EDTB20 *)
+__EDTB20 := (PROFILE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB20 := FALSE ;
+END_IF ;
+__MO_EQUAL_6 := __EDTB20 ;
+__EDTB22 := __EDTB20 ;
+IF __EDTB22 THEN
+(* FB call: SCALER *)
+TempToEndDamperScaler(HIGHEST_TEMP, 80.0, 95.0, 0.0, 65535.0) ;
+VAR_END_DAMPER_POSITION := TempToEndDamperScaler.Output ;
+END_IF ;
+__MO_SCALER_1 := __EDTB22 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0006 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,28
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB24 := TRUE ;
+IF __EDTB24 THEN
+(* Operator output on : = with __EDTB23 *)
+__EDTB23 := (PROFILE = CFG_SYSTEM_COOLDOWN_STATE) ;
+ELSE
+__EDTB23 := FALSE ;
+END_IF ;
+__MO_EQUAL_7 := __EDTB23 ;
+__EDTB25 := __EDTB23 ;
+IF __EDTB25 THEN
+VAR_END_DAMPER_POSITION := (  65535.0) ;
+END_IF ;
+__MO_1GAIN_6 := __EDTB25 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0007 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,32
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB27 := TRUE ;
+IF __EDTB27 THEN
+(* Operator output on : = with __EDTB26 *)
+__EDTB26 := (PROFILE = CFG_FAULT_STATE) ;
+ELSE
+__EDTB26 := FALSE ;
+END_IF ;
+__MO_EQUAL_8 := __EDTB26 ;
+__EDTB28 := __EDTB26 ;
+IF __EDTB28 THEN
+VAR_END_DAMPER_POSITION := (  65535.0) ;
+END_IF ;
+__MO_1GAIN_7 := __EDTB28 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0008 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,36
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB30 := TRUE ;
+IF __EDTB30 THEN
+(* Operator output on : < with __EDTB29 *)
+__EDTB29 := (VAR_END_DAMPER_POSITION < 0.0) ;
+ELSE
+__EDTB29 := FALSE ;
+END_IF ;
+__MO_LESS_1 := __EDTB29 ;
+__EDTB31 := __EDTB29 ;
+IF __EDTB31 THEN
+VAR_END_DAMPER_POSITION := (  0.0) ;
+END_IF ;
+__MO_1GAIN_8 := __EDTB31 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0009 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,40
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB33 := TRUE ;
+IF __EDTB33 THEN
+(* Operator output on : > with __EDTB32 *)
+__EDTB32 := (VAR_END_DAMPER_POSITION > 65535.0) ;
+ELSE
+__EDTB32 := FALSE ;
+END_IF ;
+__MO_GREAT_1 := __EDTB32 ;
+__EDTB34 := __EDTB32 ;
+IF __EDTB34 THEN
+VAR_END_DAMPER_POSITION := (  65535.0) ;
+END_IF ;
+__MO_1GAIN_9 := __EDTB34 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG000A ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+(* __EDTB6 *)
+(* __EDTB7 *)
+(* __EDTB8 *)
+(* __EDTB9 *)
+(* __EDTB10 *)
+(* __EDTB11 *)
+(* __EDTB12 *)
+(* __EDTB13 *)
+(* __EDTB14 *)
+(* __EDTB15 *)
+(* __EDTB16 *)
+(* __EDTB17 *)
+(* __EDTB18 *)
+(* __EDTB19 *)
+(* __EDTB20 *)
+(* __EDTB21 *)
+(* __EDTB22 *)
+(* __EDTB23 *)
+(* __EDTB24 *)
+(* __EDTB25 *)
+(* __EDTB26 *)
+(* __EDTB27 *)
+(* __EDTB28 *)
+(* __EDTB29 *)
+(* __EDTB30 *)
+(* __EDTB31 *)
+(* __EDTB32 *)
+(* __EDTB33 *)
+(* __EDTB34 *)
+

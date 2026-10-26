@@ -1,0 +1,218 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB2 := TRUE ;
+IF __EDTB2 THEN
+(* Operator output on : = with __EDTB1 *)
+__EDTB1 := (PROFILE = CFG_IDLE_STATE) ;
+ELSE
+__EDTB1 := FALSE ;
+END_IF ;
+__MO_EQUAL_1 := __EDTB1 ;
+__EDTB3 := __EDTB1 ;
+IF __EDTB3 THEN
+VAR_SUPPLY_DESIRED_FAN_SPEED_HZ := (  0.0) ;
+END_IF ;
+__MO_1GAIN_1 := __EDTB3 ;
+__EDTB4 := __EDTB3 ;
+IF __EDTB4 THEN
+VAR_EXHAUST_DESIRED_FAN_SPEED_HZ := (  0.0) ;
+END_IF ;
+__MO_1GAIN_2 := __EDTB4 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,5
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB6 := TRUE ;
+IF __EDTB6 THEN
+(* Operator output on : = with __EDTB5 *)
+__EDTB5 := (PROFILE = CFG_PRE_PURGE_CYCLE_STATE) ;
+ELSE
+__EDTB5 := FALSE ;
+END_IF ;
+__MO_EQUAL_2 := __EDTB5 ;
+__EDTB7 := __EDTB5 ;
+IF __EDTB7 THEN
+VAR_SUPPLY_DESIRED_FAN_SPEED_HZ := (  CFG_PURGE_SPEED_HZ) ;
+END_IF ;
+__MO_1GAIN_3 := __EDTB7 ;
+__EDTB8 := __EDTB7 ;
+IF __EDTB8 THEN
+VAR_EXHAUST_DESIRED_FAN_SPEED_HZ := (  CFG_PURGE_SPEED_HZ) ;
+END_IF ;
+__MO_1GAIN_4 := __EDTB8 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0002 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,9
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB10 := TRUE ;
+IF __EDTB10 THEN
+(* Operator output on : = with __EDTB9 *)
+__EDTB9 := (PROFILE = CFG_ACTIVE_STATE) ;
+ELSE
+__EDTB9 := FALSE ;
+END_IF ;
+__MO_EQUAL_3 := __EDTB9 ;
+__EDTB11 := __EDTB9 ;
+IF __EDTB11 THEN
+(* FB call: DynamicPressureTrim *)
+SupplyPressureTrim(AI_SUPPLY_PRESSURE_PV, CFG_SUPPLY_PRESSURE_SP) ;
+VAR_SUPPLY_DESIRED_FAN_SPEED_HZ := SupplyPressureTrim.VAR_Desired_Hz ;
+END_IF ;
+__MO_DYNAMICPRESSURETRIM_1 := __EDTB11 ;
+__EDTB12 := __EDTB11 ;
+IF __EDTB12 THEN
+(* FB call: DynamicPressureTrim *)
+ExhaustPressureTrim(AI_EXHAUST_PRESSURE_PV, CFG_EXHAUST_PRESSURE_SP) ;
+VAR_EXHAUST_DESIRED_FAN_SPEED_HZ := ExhaustPressureTrim.VAR_Desired_Hz ;
+END_IF ;
+__MO_DYNAMICPRESSURETRIM_2 := __EDTB12 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0003 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,13
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB14 := TRUE ;
+IF __EDTB14 THEN
+(* Operator output on : = with __EDTB13 *)
+__EDTB13 := (PROFILE = CFG_SYSTEM_COOLDOWN_STATE) ;
+ELSE
+__EDTB13 := FALSE ;
+END_IF ;
+__MO_EQUAL_4 := __EDTB13 ;
+__EDTB15 := __EDTB13 ;
+IF __EDTB15 THEN
+VAR_SUPPLY_DESIRED_FAN_SPEED_HZ := (  CFG_COOLDOWN_FAN_SPEED_HZ) ;
+END_IF ;
+__MO_1GAIN_5 := __EDTB15 ;
+__EDTB16 := __EDTB15 ;
+IF __EDTB16 THEN
+VAR_EXHAUST_DESIRED_FAN_SPEED_HZ := (  CFG_COOLDOWN_FAN_SPEED_HZ) ;
+END_IF ;
+__MO_1GAIN_6 := __EDTB16 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0004 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,17
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB18 := TRUE ;
+IF __EDTB18 THEN
+(* Operator output on : = with __EDTB17 *)
+__EDTB17 := (PROFILE = CFG_FAULT_STATE) ;
+ELSE
+__EDTB17 := FALSE ;
+END_IF ;
+__MO_EQUAL_5 := __EDTB17 ;
+__EDTB19 := __EDTB17 ;
+IF __EDTB19 THEN
+VAR_SUPPLY_DESIRED_FAN_SPEED_HZ := (  CFG_FAULT_STATE_FAN_SPEED_HZ) ;
+END_IF ;
+__MO_1GAIN_7 := __EDTB19 ;
+__EDTB20 := __EDTB19 ;
+IF __EDTB20 THEN
+VAR_EXHAUST_DESIRED_FAN_SPEED_HZ := (  CFG_FAULT_STATE_FAN_SPEED_HZ) ;
+END_IF ;
+__MO_1GAIN_8 := __EDTB20 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0005 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,21
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB21 := TRUE ;
+IF __EDTB21 THEN
+(* FB call: SCALER *)
+MasterFanControlScaler_1(VAR_SUPPLY_DESIRED_FAN_SPEED_HZ, 0.0, 60.0, 0.0, 65535.0) ;
+VAR_SUPPLY_FAN_SPEED_CMD := MasterFanControlScaler_1.Output ;
+END_IF ;
+__MO_SCALER_1 := __EDTB21 ;
+__EDTB22 := __EDTB21 ;
+IF __EDTB22 THEN
+(* FB call: SCALER *)
+MasterFanControlScaler(VAR_EXHAUST_DESIRED_FAN_SPEED_HZ, 0.0, 60.0, 0.0, 65535.0) ;
+VAR_EXHAUST_FAN_SPEED_CMD := MasterFanControlScaler.Output ;
+END_IF ;
+__MO_SCALER_2 := __EDTB22 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0006 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,28
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+
+(*************** Code for the end of Rung **************)
+__GL __LG0007 ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+(* __EDTB6 *)
+(* __EDTB7 *)
+(* __EDTB8 *)
+(* __EDTB9 *)
+(* __EDTB10 *)
+(* __EDTB11 *)
+(* __EDTB12 *)
+(* __EDTB13 *)
+(* __EDTB14 *)
+(* __EDTB15 *)
+(* __EDTB16 *)
+(* __EDTB17 *)
+(* __EDTB18 *)
+(* __EDTB19 *)
+(* __EDTB20 *)
+(* __EDTB21 *)
+(* __EDTB22 *)
+

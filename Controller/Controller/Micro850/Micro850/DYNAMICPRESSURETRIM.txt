@@ -1,0 +1,124 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB1 := TRUE ;
+IF __EDTB1 THEN
+(* FB call: SCALER *)
+SCALER_4(VAR_ACTIVE_BAY_COUNT, 0.0, 3.0, 0.0, 60.0) ;
+VAR_BASE_FAN_SPEED_HZ := SCALER_4.Output ;
+END_IF ;
+__MO_SCALER_1 := __EDTB1 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Rung **********************************)
+(*Controls trim logic based on the pressure of the supply and exhaust plenum Get difference between current pressure and desired pressure; multiply difference by some gain setpoint*)
+__STEPPRAGMA
+0,8
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB2 := TRUE ;
+IF __EDTB2 THEN
+VAR_PRESSURE_ERROR := (VAR_PLENUM_PRESSURE - CFG_PRESSURE_SP) ;
+END_IF ;
+__MO_MINUS_1 := __EDTB2 ;
+__EDTB3 := __EDTB2 ;
+IF __EDTB3 THEN
+VAR_TRIM_HZ := (VAR_PRESSURE_ERROR * CFG_PRESSURE_TRIM_GAIN) ;
+END_IF ;
+__MO_MULT_1 := __EDTB3 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0002 ;
+
+
+(*************** Rung **********************************)
+(*Make sure the trim is within allowable bounds of +/-5*)
+__STEPPRAGMA
+0,12
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB4 := TRUE ;
+IF __EDTB4 THEN
+(* FB call: RealMin *)
+RealMin_2(VAR_TRIM_HZ, 5.0) ;
+VAR_TRIM_HZ := RealMin_2.Real_Min_Value ;
+END_IF ;
+__MO_REALMIN_1 := __EDTB4 ;
+__EDTB5 := __EDTB4 ;
+IF __EDTB5 THEN
+(* FB call: RealMax *)
+RealMax_2(VAR_TRIM_HZ, -5.0) ;
+VAR_TRIM_HZ := RealMax_2.Real_Max_Value ;
+END_IF ;
+__MO_REALMAX_1 := __EDTB5 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0003 ;
+
+
+(*************** Rung **********************************)
+(*Get desired hz thats communicated to VFG by adding the two*)
+__STEPPRAGMA
+0,16
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB6 := TRUE ;
+IF __EDTB6 THEN
+VAR_DESIRED_HZ := (VAR_BASE_FAN_SPEED_HZ + VAR_TRIM_HZ) ;
+END_IF ;
+__MO_PLUS_1 := __EDTB6 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0004 ;
+
+
+(*************** Rung **********************************)
+(*Makes sure that desired hz is within allowable limits 0.0/60.0*)
+__STEPPRAGMA
+0,20
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB7 := TRUE ;
+IF __EDTB7 THEN
+(* FB call: RealMin *)
+RealMin_1(VAR_DESIRED_HZ, 60.0) ;
+VAR_DESIRED_HZ := RealMin_1.Real_Min_Value ;
+END_IF ;
+__MO_REALMIN_2 := __EDTB7 ;
+__EDTB8 := __EDTB7 ;
+IF __EDTB8 THEN
+(* FB call: RealMax *)
+RealMax_1(VAR_DESIRED_HZ, 0.0) ;
+VAR_DESIRED_HZ := RealMax_1.Real_Max_Value ;
+END_IF ;
+__MO_REALMAX_2 := __EDTB8 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0005 ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+(* __EDTB6 *)
+(* __EDTB7 *)
+(* __EDTB8 *)
+

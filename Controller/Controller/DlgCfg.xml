@@ -2,5 +2,66 @@
 <DLGRCP_Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MajorVersion>0</MajorVersion>
   <MinorVersion>0</MinorVersion>
-  <DLGRCP_Set />
+  <DLGRCP_Set>
+    <DLGRCP_Set>
+      <ID>1</ID>
+      <DLGRCP_VarVA>
+        <DLGRCP_VarVA>
+          <ArrayLength>1</ArrayLength>
+          <VirtualAddress>1250</VirtualAddress>
+          <Name>SYSTEM_STATE</Name>
+          <Index>1</Index>
+          <ISaDataType>INT</ISaDataType>
+          <Valid>true</Valid>
+          <ErrorMsg />
+          <VarDataType>ISA_TYPINT</VarDataType>
+        </DLGRCP_VarVA>
+        <DLGRCP_VarVA>
+          <ArrayLength>1</ArrayLength>
+          <VirtualAddress>1368</VirtualAddress>
+          <Name>VAR_Supply_Plenum_Temp</Name>
+          <Index>2</Index>
+          <ISaDataType>REAL</ISaDataType>
+          <Valid>true</Valid>
+          <ErrorMsg />
+          <VarDataType>ISA_TYPREAL</VarDataType>
+        </DLGRCP_VarVA>
+        <DLGRCP_VarVA>
+          <ArrayLength>1</ArrayLength>
+          <VirtualAddress>1312</VirtualAddress>
+          <Name>AI_Exhaust_Pressure_PV</Name>
+          <Index>3</Index>
+          <ISaDataType>REAL</ISaDataType>
+          <Valid>true</Valid>
+          <ErrorMsg />
+          <VarDataType>ISA_TYPREAL</VarDataType>
+        </DLGRCP_VarVA>
+        <DLGRCP_VarVA>
+          <ArrayLength>1</ArrayLength>
+          <VirtualAddress>1412</VirtualAddress>
+          <Name>Active_Bay_Mask</Name>
+          <Index>4</Index>
+          <ISaDataType>DINT</ISaDataType>
+          <Valid>true</Valid>
+          <ErrorMsg />
+          <VarDataType>ISA_TYPDINT</VarDataType>
+        </DLGRCP_VarVA>
+        <DLGRCP_VarVA>
+          <ArrayLength>1</ArrayLength>
+          <VirtualAddress>1227</VirtualAddress>
+          <Name>VAR_Burner_Enable_Output</Name>
+          <Index>5</Index>
+          <ISaDataType>BOOL</ISaDataType>
+          <Valid>true</Valid>
+          <ErrorMsg />
+          <VarDataType>ISA_TYPBOOL</VarDataType>
+        </DLGRCP_VarVA>
+      </DLGRCP_VarVA>
+      <Name>DSET1</Name>
+      <Description />
+      <Separator>COMMA</Separator>
+      <Valid>true</Valid>
+      <ErrorMsg />
+    </DLGRCP_Set>
+  </DLGRCP_Set>
 </DLGRCP_Config>

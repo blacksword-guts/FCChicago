@@ -1,0 +1,112 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(*AI_Supply_Plenum_Temp (32F-200F) AI_Plenum_Static_Pressure(0.0-5.0 in/WC)
+AI_Fan_Speed_Control(0.0-60.00hz)*)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB1 := TRUE ;
+IF __EDTB1 THEN
+AI_SUPPLY_PLENUM_TEMP_REAL := ANY_TO_REAL(_IO_X1_AI_00) ;
+END_IF ;
+__MO_ANY_TO_REAL_1 := __EDTB1 ;
+__EDTB2 := __EDTB1 ;
+IF __EDTB2 THEN
+(* FB call: SCALER *)
+SupplyPlenumTempScaler(AI_SUPPLY_PLENUM_TEMP_REAL, 4000.0, 20000.0, 32.0, 200.0) ;
+VAR_SUPPLY_PLENUM_TEMP := SupplyPlenumTempScaler.Output ;
+END_IF ;
+__MO_SCALER_1 := __EDTB2 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,8
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB3 := TRUE ;
+IF __EDTB3 THEN
+AI_EXHAUST_PLENUM_TEMP_REAL := ANY_TO_REAL(_IO_X1_AI_01) ;
+END_IF ;
+__MO_ANY_TO_REAL_2 := __EDTB3 ;
+__EDTB4 := __EDTB3 ;
+IF __EDTB4 THEN
+(* FB call: SCALER *)
+ExhaustTempScaler(AI_EXHAUST_PLENUM_TEMP_REAL, 4000.0, 20000.0, 32.0, 200.0) ;
+VAR_EXHAUST_PLENUM_TEMP := ExhaustTempScaler.Output ;
+END_IF ;
+__MO_SCALER_2 := __EDTB4 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0002 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,15
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB5 := TRUE ;
+IF __EDTB5 THEN
+AI_EXHAUST_PRESSURE_REAL := ANY_TO_REAL(_IO_X1_AI_03) ;
+END_IF ;
+__MO_ANY_TO_REAL_3 := __EDTB5 ;
+__EDTB6 := __EDTB5 ;
+IF __EDTB6 THEN
+(* FB call: SCALER *)
+ExhaustFanPressureScaler(AI_EXHAUST_PRESSURE_REAL, 4000.0, 20000.0, 0.0, 5.0) ;
+AI_EXHAUST_PRESSURE_PV := ExhaustFanPressureScaler.Output ;
+END_IF ;
+__MO_SCALER_3 := __EDTB6 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0003 ;
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,22
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB7 := TRUE ;
+IF __EDTB7 THEN
+AI_SUPPLY_PRESSURE_REAL := ANY_TO_REAL(_IO_X1_AI_02) ;
+END_IF ;
+__MO_ANY_TO_REAL_4 := __EDTB7 ;
+__EDTB8 := __EDTB7 ;
+IF __EDTB8 THEN
+(* FB call: SCALER *)
+SupplyFanPressureSCaler(AI_SUPPLY_PRESSURE_REAL, 4000.0, 20000.0, 0.0, 5.0) ;
+AI_SUPPLY_PRESSURE_PV := SupplyFanPressureSCaler.Output ;
+END_IF ;
+__MO_SCALER_4 := __EDTB8 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0004 ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+(* __EDTB6 *)
+(* __EDTB7 *)
+(* __EDTB8 *)
+

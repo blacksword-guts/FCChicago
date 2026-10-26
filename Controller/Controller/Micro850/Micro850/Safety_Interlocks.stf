@@ -76,10 +76,10 @@ SOR  [0,41] (**) (**)
    NXB  
  BST  FB  [1,3] (*>=*) (*8*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*VAR_Exhaust_Plenum_Temp*) (**)  , (*i2:*)(*CFG_Critical_Temp*) (**) ; (*o1:*)(**) (**) )  FB  [4,3] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_CRITICAL_TEMP_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
    NXB  
- BST  XIO  [1,6] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)  FB  [2,6] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_E_STOP_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
+ BST  XIC  [1,6] (*_IO_EM_DI_00*) (*DI_SafetyRelay_Status*)  FB  [2,6] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_E_STOP_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
    NXB  
- BST  XIO  [1,8] (*_IO_EM_DI_01*) (*DI_SupplyFan_Proof*)  FB  [2,8] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_AIRFLOW_LOST_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
-   NXB  XIO  [1,10] (*_IO_EM_DI_02*) (*DI_ExhaustFan_Proof*)  FB  [2,10] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_AIRFLOW_LOST_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
+ BST  XIC  [1,8] (*_IO_EM_DI_01*) (*DI_SupplyFan_Proof*)  FB  [2,8] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_AIRFLOW_LOST_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
+   NXB  XIC  [1,10] (*_IO_EM_DI_02*) (*DI_ExhaustFan_Proof*)  FB  [2,10] (*1 gain*) (*15*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*CFG_AIRFLOW_LOST_FAULT_CODE*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*VAR_Fault_Code*) (**) )
  BND
 
  BND
